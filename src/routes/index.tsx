@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteShell } from "../components/SiteShell";
 import { Reveal } from "../components/Reveal";
+import xavierImg from "@/assets/spotlights/xavier.jpg";
+import stevenImg from "@/assets/spotlights/steven.jpg";
+import davianImg from "@/assets/spotlights/davian.jpg";
+import elijahImg from "@/assets/spotlights/elijah.jpg";
+import cooperImg from "@/assets/spotlights/cooper.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -45,7 +50,7 @@ const plans: Plan[] = [
       "Magazine-style player spotlight",
       "Instagram feature",
       "Shareable PDF for coaches and NIL outreach",
-      "Communicate your identity wherever it's sent",
+      "Communicate your identity on any platform easily.",
     ],
     cta: "Get Full Package",
     href: "https://whop.com/checkout/plan_DKt7Qijxbe4HP",
@@ -53,7 +58,7 @@ const plans: Plan[] = [
   },
   {
     title: "GoZone Founding Member",
-    price: "Free",
+    price: "Exclusive Access",
     bullets: [
       "Exclusive for GoZone founding members",
       "Waived Spotlight access",
@@ -238,10 +243,12 @@ function PlanCard({ plan }: { plan: Plan }) {
       <div>
         <h3 className="font-display text-2xl tracking-tight">{plan.title}</h3>
         <div className="mt-5 flex items-baseline gap-2">
-          <span className={`font-display text-5xl ${isFeatured ? "accent-violet" : ""}`}>
+          <span
+            className={`font-display ${plan.price.startsWith("$") ? "text-5xl" : "text-3xl"} ${isFeatured ? "accent-violet" : ""}`}
+          >
             {plan.price}
           </span>
-          {plan.price !== "Free" && (
+          {plan.price.startsWith("$") && (
             <span className="text-sm text-muted-foreground">one-time</span>
           )}
         </div>
@@ -272,26 +279,34 @@ function PlanCard({ plan }: { plan: Plan }) {
 }
 
 const SAMPLES = [
-  { name: "Marcus J.", role: "PG · Class of '26", tone: "from-zinc-900 to-zinc-700" },
-  { name: "Devin R.", role: "SG · Transfer Portal", tone: "from-violet-900/40 to-zinc-900" },
-  { name: "Kai T.", role: "SF · Sophomore", tone: "from-zinc-800 to-black" },
-  { name: "Andre L.", role: "PF · Prep School", tone: "from-zinc-900 to-zinc-800" },
-  { name: "Jordan B.", role: "C · Freshman", tone: "from-violet-900/30 to-black" },
-  { name: "Trey M.", role: "SG · Senior", tone: "from-zinc-900 to-zinc-700" },
+  { name: "Xavier Muhammad", src: xavierImg, igUrl: "https://www.instagram.com/p/DW9k7HLDv3B/" },
+  { name: "Steven Reynolds III", src: stevenImg, igUrl: "https://www.instagram.com/p/DVY9RtfjOKW/" },
+  { name: "Da'Vian Brooks", src: davianImg, igUrl: "https://www.instagram.com/p/DUqtul9jJ8_/" },
+  { name: "Elijah Andrews", src: elijahImg, igUrl: "https://www.instagram.com/p/DUT16iGDu1x/" },
+  { name: "Cooper Head", src: cooperImg, igUrl: "https://www.instagram.com/p/DR0Gd7QDtcG/" },
 ];
 
-function SpotlightTile({ name, role, tone }: { name: string; role: string; tone: string }) {
+function SpotlightTile({ name, src, igUrl }: { name: string; src: string; igUrl: string }) {
   return (
-    <div className={`group relative aspect-[4/5] overflow-hidden rounded-xl border hairline bg-gradient-to-br ${tone}`}>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.08),transparent_60%)]" />
-      <div className="absolute left-3 top-3 text-[10px] uppercase tracking-[0.2em] text-white/60">
-        Spotlight
+    <a
+      href={igUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`View ${name} on Instagram`}
+      className="group relative block aspect-[4/5] overflow-hidden rounded-2xl border hairline bg-zinc-900 shadow-lg shadow-black/40 transition-transform duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+    >
+      <img
+        src={src}
+        alt={`${name} — Hoopivate Spotlight`}
+        loading="lazy"
+        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] group-active:scale-[1.03]"
+      />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100" />
+      <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-active:translate-y-0 group-active:opacity-100">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-black">
+          View on Instagram ↗
+        </span>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <div className="font-display text-xl leading-tight">{name}</div>
-        <div className="text-xs text-white/60">{role}</div>
-      </div>
-      <div className="absolute right-3 top-3 text-[10px] text-white/40">Hoopivate</div>
-    </div>
+    </a>
   );
 }

@@ -1,47 +1,37 @@
-# Hoopivate Landing Site Plan
+All 5 spotlight images received (Xavier, Steven, Davian, Elijah, Coop). Here's what I'll do:
 
-A mobile-first, editorial, space-inspired site for Hoopivate with 3 routes: `/`, `/studio`, `/vault`.
+## 1. Copy tweaks on Spotlight (`src/routes/index.tsx`)
 
-## Visual direction
+- **$15 plan bullet** — change "Communicate your identity wherever it's sent" → **"Communicate your identity on any platform easily."**
+- **GoZone Founding Member price** — change `"Free"` → `"Exclusive Access"`. Adjust `PlanCard` so when the price isn't numeric, the "one-time" subtitle is hidden and the price renders at a smaller, more fitting size (so "Exclusive Access" doesn't blow out the card).
 
-- **Palette**: Pure black background (#000), off-white text (#F5F5F5), muted grays for secondary, single purple accent (#A78BFA / violet-400) reserved for the GoZone founding card and key emphasis.
-- **Typography**: Editorial pairing — a tight display serif (Instrument Serif or similar) for headlines, clean grotesk (Inter / Geist) for body. Large type, tight tracking on headlines.
-- **Atmosphere**: Subtle starfield canvas in the background (slow drift, low opacity), soft floating orb gradients behind hero sections. Restrained — not flashy.
-- **Motion**: Gentle scroll-reveal (fade + 8px rise), parallax on hero orb only. No bouncy / startup-style animations.
-- **Layout**: Generous whitespace, magazine-style asymmetry where it fits, full-width sections stacked vertically.
+## 2. Spotlight images → tappable IG tiles
 
-## Pages & sections
+**Assets:** copy the 5 uploads into `src/assets/spotlights/` as:
+`xavier.jpg`, `steven.jpg`, `davian.jpg`, `elijah.jpg`, `cooper.jpg`
 
-### `/` Home
-1. **Nav** — minimal: Hoopivate wordmark left, links (Studio, Vault, Instagram) right.
-2. **Hero** — H1 "Turn your story into NIL and recruitment leverage." + subhead + starfield/orb backdrop.
-3. **Pricing (3 cards)** — Instagram Spotlight ($10), Spotlight + PDF ($15), GoZone Founding (Free, purple-accented border + subtle violet glow). Each CTA links to the provided Whop / Tally URLs in a new tab.
-4. **Why this matters** — short editorial block: 2–3 paragraphs / pull-quotes on storytelling as recruiting & NIL leverage.
-5. **Spotlight examples** — Instagram-feed style grid of placeholder magazine covers (generated images mocking athlete spotlights).
-6. **Footer** — wordmark, tagline, Instagram link, copyright.
+**Data:** replace the placeholder `SAMPLES` array with the real 5, each with `{ src, name, igUrl }` pointing to the IG post links you sent.
 
-### `/studio`
-1. Hero: "Build your identity beyond the court. At Studio, we help you own your merch + online shop."
-2. Short rewritten intro (2 sentences max) — full pitch lives on the redirect page.
-3. Past brands gallery — placeholder brand mockup images.
-4. Mini reviews / quotes strip.
-5. Compact "Why join" — 5 short bullets (Ownership, 100% Profit, Pro Designs, Marketing, Support).
-6. CTA: "Get Access" → https://whop.com/hoopivate/hoopivatestudio/
+**Tile design** (`SpotlightTile`):
+- Wrap each tile in an `<a href={igUrl} target="_blank" rel="noopener noreferrer">` — the whole image is the button.
+- Rounded `rounded-2xl`, `overflow-hidden`, hairline border, soft shadow.
+- Full-bleed image via `<img>` with `object-cover` — no cropping of the headline/text inside the artwork (the cover art already contains its own typography, so we don't overlay any text on top).
+- Aspect ratio `aspect-[4/5]` to match IG portrait covers and keep all text inside visible.
+- **Press / hover overlay:** a subtle black-to-transparent gradient at the bottom that intensifies on `hover`/`active` (touch press), revealing a small pill that reads **"View on Instagram ↗"**. On mobile, the press state triggers via `:active` so a finger-down gives the same visual feedback before the tap completes and opens the link.
+- Smooth `transition` on image scale (1 → 1.03) and overlay opacity for the editorial feel.
+- Accessible `aria-label={`View ${name} on Instagram`}`.
 
-### `/vault`
-1. Hero: "HoopivateVault" / "Wear what you stand for."
-2. Product placeholder grid (4–6 tiles: Tees, Hoodies, Headwear, Coming Soon).
-3. CTA linking to https://hoopivate-shop.fourthwall.com
+**Grid:** keep the existing 2-col mobile / 3-col desktop layout — 5 tiles flow naturally (last row has 2 tiles on desktop, 1 on mobile last row).
 
-## Technical
+**Eyebrow link** "@hoopivate ↗" stays as is above the grid.
 
-- Vite + React + TS + Tailwind (default Lovable stack), React Router for 3 routes.
-- Starfield: single lightweight `<canvas>` component, fixed position, `pointer-events-none`, respects `prefers-reduced-motion`.
-- All external CTAs open in new tab with `rel="noopener"`.
-- SEO: per-page `<title>`, meta description, single H1, semantic sections, alt text on placeholder imagery.
-- Fully responsive; designed mobile-first (Instagram traffic priority).
-- Placeholder spotlight / brand / product images generated via imagegen and imported as ES6 assets.
+## 3. Out of scope (untouched)
 
-## On GitHub Pages & custom domain
+- Nav, footer, Studio, Vault, GoZone violet styling, hero copy — all stay exactly as they are.
+- No new dependencies.
 
-I'll answer in chat after the plan: Lovable already hosts the site and supports custom domains directly (Project Settings → Domains, or the Publish dialog). You don't need GitHub Pages for that — but I can also export to GitHub if you want the repo. I'll confirm your preference once the plan is approved.
+## Technical notes
+
+- Images imported as ES modules from `@/assets/spotlights/*.jpg` for Vite hashing/optimization.
+- Press feedback uses Tailwind `group` + `group-hover:` / `group-active:` utilities — no JS state needed.
+- External links use `target="_blank"` + `rel="noopener noreferrer"`.
