@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteShell } from "../components/SiteShell";
 import { Reveal } from "../components/Reveal";
+import xavierImg from "@/assets/spotlights/xavier.jpg";
+import stevenImg from "@/assets/spotlights/steven.jpg";
+import davianImg from "@/assets/spotlights/davian.jpg";
+import elijahImg from "@/assets/spotlights/elijah.jpg";
+import cooperImg from "@/assets/spotlights/cooper.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -45,7 +50,7 @@ const plans: Plan[] = [
       "Magazine-style player spotlight",
       "Instagram feature",
       "Shareable PDF for coaches and NIL outreach",
-      "Communicate your identity wherever it's sent",
+      "Communicate your identity on any platform easily.",
     ],
     cta: "Get Full Package",
     href: "https://whop.com/checkout/plan_DKt7Qijxbe4HP",
@@ -53,7 +58,7 @@ const plans: Plan[] = [
   },
   {
     title: "GoZone Founding Member",
-    price: "Free",
+    price: "Exclusive Access",
     bullets: [
       "Exclusive for GoZone founding members",
       "Waived Spotlight access",
