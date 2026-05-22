@@ -9,16 +9,6 @@ import cooperImg from "@/assets/spotlights/cooper.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
-  head: () => ({
-    meta: [
-      { title: "Hoopivate — Turn your story into NIL and recruitment leverage" },
-      {
-        name: "description",
-        content:
-          "Hoopivate helps basketball players turn their journey into magazine-style storytelling assets for coaches and NIL brands.",
-      },
-    ],
-  }),
 });
 
 type Plan = {
@@ -77,14 +67,14 @@ function Index() {
       <section className="relative mx-auto max-w-6xl px-5 pb-24 pt-12 sm:px-8 sm:pt-20">
         <Reveal>
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border hairline bg-white/5 px-3 py-1 text-xs text-muted-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
             For players. Built for the era of NIL.
           </p>
         </Reveal>
         <Reveal delay={80}>
           <h1 className="font-display text-5xl leading-[1.02] tracking-tight text-balance sm:text-7xl md:text-8xl">
             Turn your story into{" "}
-            <span className="italic accent-violet">NIL</span> and{" "}
+            <span className="italic">NIL</span> and{" "}
             <span className="italic">recruitment</span> leverage.
           </h1>
         </Reveal>
@@ -141,7 +131,7 @@ function Index() {
           <Reveal className="md:col-span-5">
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">02 — Why this matters</p>
             <h2 className="mt-3 font-display text-4xl leading-tight tracking-tight sm:text-5xl">
-              Stats fade. <em className="not-italic accent-violet">Stories</em> sign deals.
+              Stats fade. <em className="not-italic italic">Stories</em> sign deals.
             </h2>
           </Reveal>
           <div className="space-y-8 md:col-span-7">
@@ -160,7 +150,7 @@ function Index() {
               </p>
             </Reveal>
             <Reveal delay={220}>
-              <blockquote className="border-l-2 border-violet-soft pl-5 font-display text-2xl italic leading-snug">
+              <blockquote className="border-l-2 border-white/30 pl-5 font-display text-2xl italic leading-snug">
                 "You can't out-DM the noise. You can out-tell it."
               </blockquote>
             </Reveal>
@@ -204,7 +194,7 @@ function Index() {
           <h2 className="font-display text-4xl leading-tight tracking-tight text-balance sm:text-6xl">
             Your story is the leverage.
             <br />
-            <span className="accent-violet italic">Use it.</span>
+            <span className="italic">Use it.</span>
           </h2>
         </Reveal>
         <Reveal delay={120}>
