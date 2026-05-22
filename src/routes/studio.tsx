@@ -44,14 +44,14 @@ function Studio() {
       <section className="relative mx-auto max-w-6xl px-5 pb-20 pt-12 sm:px-8 sm:pt-20">
         <Reveal>
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border hairline bg-white/5 px-3 py-1 text-xs text-muted-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
             HoopivateStudio
           </p>
         </Reveal>
         <Reveal delay={80}>
           <h1 className="font-display text-5xl leading-[1.02] tracking-tight text-balance sm:text-7xl">
             Build your identity{" "}
-            <span className="italic accent-violet">beyond the court.</span>
+            <span className="italic">beyond the court.</span>
           </h1>
         </Reveal>
         <Reveal delay={160}>
@@ -141,7 +141,7 @@ function Studio() {
           {PILLARS.map((p, i) => (
             <Reveal key={p.t} delay={i * 60}>
               <div className="grid grid-cols-12 items-center gap-4 py-6">
-                <div className="col-span-3 font-display text-3xl accent-violet sm:text-4xl">{p.k}</div>
+                <div className="col-span-3 font-display text-3xl sm:text-4xl">{p.k}</div>
                 <div className="col-span-9 sm:col-span-3 font-display text-xl">{p.t}</div>
                 <div className="col-span-12 text-sm text-muted-foreground sm:col-span-6">{p.d}</div>
               </div>
@@ -154,7 +154,7 @@ function Studio() {
       <section className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8">
         <Reveal>
           <h2 className="font-display text-4xl leading-tight tracking-tight text-balance sm:text-6xl">
-            Stop settling. <span className="accent-violet italic">Own it.</span>
+            Stop settling. <span className="italic">Own it.</span>
           </h2>
         </Reveal>
         <Reveal delay={120}>

@@ -32,13 +32,13 @@ function Vault() {
       <section className="relative mx-auto max-w-6xl px-5 pb-20 pt-12 sm:px-8 sm:pt-20">
         <Reveal>
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border hairline bg-white/5 px-3 py-1 text-xs text-muted-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
             HoopivateVault
           </p>
         </Reveal>
         <Reveal delay={80}>
           <h1 className="font-display text-6xl leading-[1] tracking-tight sm:text-8xl">
-            Hoopivate<span className="accent-violet italic">Vault</span>
+            Hoopivate<span className="italic">Vault</span>
           </h1>
         </Reveal>
         <Reveal delay={160}>
@@ -102,7 +102,7 @@ function Vault() {
         <Reveal>
           <h2 className="font-display text-4xl leading-tight tracking-tight text-balance sm:text-6xl">
             The full vault lives on{" "}
-            <span className="accent-violet italic">Fourthwall.</span>
+            <span className="italic">Fourthwall.</span>
           </h2>
         </Reveal>
         <Reveal delay={120}>
