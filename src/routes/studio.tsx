@@ -4,16 +4,6 @@ import { Reveal } from "../components/Reveal";
 
 export const Route = createFileRoute("/studio")({
   component: Studio,
-  head: () => ({
-    meta: [
-      { title: "Hoopivate Studio — Build your identity beyond the court" },
-      {
-        name: "description",
-        content:
-          "Own your merch and online shop. Hoopivate Studio helps players build independent, fully-owned storefronts.",
-      },
-    ],
-  }),
 });
 
 const BRANDS = [

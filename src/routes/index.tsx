@@ -9,16 +9,6 @@ import cooperImg from "@/assets/spotlights/cooper.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
-  head: () => ({
-    meta: [
-      { title: "Hoopivate — Turn your story into NIL and recruitment leverage" },
-      {
-        name: "description",
-        content:
-          "Hoopivate helps basketball players turn their journey into magazine-style storytelling assets for coaches and NIL brands.",
-      },
-    ],
-  }),
 });
 
 type Plan = {

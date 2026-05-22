@@ -4,16 +4,6 @@ import { Reveal } from "../components/Reveal";
 
 export const Route = createFileRoute("/vault")({
   component: Vault,
-  head: () => ({
-    meta: [
-      { title: "HoopivateVault — Wear what you stand for" },
-      {
-        name: "description",
-        content:
-          "HoopivateVault: apparel and future drops from the Hoopivate Fourthwall shop.",
-      },
-    ],
-  }),
 });
 
 const PRODUCTS = [
