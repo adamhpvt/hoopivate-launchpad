@@ -32,7 +32,7 @@ const plans: Plan[] = [
       "High-impact visuals to make your profile stand out",
     ],
     cta: "Get Featured",
-    href: "https://whop.com/checkout/plan_JQAhBsAhA2mhq",
+    href: "https://whop.com/checkout/plan_uJrlB6XwAM5r4",
   },
   {
     title: "Deep Dive Spotlight",
@@ -44,7 +44,7 @@ const plans: Plan[] = [
       "Perfect for showcasing character behind the numbers",
     ],
     cta: "Get Deep Dive",
-    href: "https://whop.com/checkout/plan_DKt7Qijxbe4HP",
+    href: "https://whop.com/checkout/plan_yUQWx3eYgbyXO",
     tag: "Extended Feature",
   },
   {
