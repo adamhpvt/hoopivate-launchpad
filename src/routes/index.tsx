@@ -23,39 +23,41 @@ type Plan = {
 
 const plans: Plan[] = [
   {
-    title: "Instagram Spotlight",
+    title: "Mindset Spotlight",
     price: "$10",
     bullets: [
-      "Magazine-style player spotlight",
-      "Story featured on Hoopivate Instagram",
-      "Designed to help your profile stand out",
+      "Magazine-style Instagram player spotlight (Up to 10 slides)",
+      "Quick cinematic overview of your journey and achievements",
+      "Focused look at the mindset that drives your game",
+      "High-impact visuals to make your profile stand out",
     ],
     cta: "Get Featured",
     href: "https://whop.com/checkout/plan_JQAhBsAhA2mhq",
   },
   {
-    title: "Spotlight + Shareable PDF",
+    title: "Deep Dive Spotlight",
     price: "$15",
     bullets: [
-      "Magazine-style player spotlight",
-      "Instagram feature",
-      "Shareable PDF for coaches and NIL outreach",
-      "Communicate your identity on any platform easily.",
+      "Extended documentary-style Instagram feature (Up to 20 slides)",
+      "Comprehensive career timeline mapping out your milestones",
+      "Deep dive into key events and how they shaped you as a player",
+      "Perfect for showcasing character behind the numbers",
     ],
-    cta: "Get Full Package",
+    cta: "Get Deep Dive",
     href: "https://whop.com/checkout/plan_DKt7Qijxbe4HP",
-    tag: "Most Popular",
+    tag: "Extended Feature",
   },
   {
-    title: "GoZone Founding Member",
-    price: "Exclusive Access",
+    title: "Recruitment Asset",
+    price: "$20",
     bullets: [
-      "Exclusive for GoZone founding members",
-      "Waived Spotlight access",
-      "Verification required before approval",
+      "Full Extended Documentary Feature (All features of the $15 tier)",
+      "Shareable Recruitment PDF",
+      "Acts as a visual resume of your journey, timeline, and mindset",
+      "Ready-to-send asset for emailing college coaches and NIL brands",
     ],
-    cta: "Verify Membership",
-    href: "https://tally.so/r/J9W1Md",
+    cta: "Get Full Package",
+    href: "https://whop.com/checkout/plan_b4k4jzCOrAWl1",
     featured: true,
   },
 ];
@@ -216,36 +218,30 @@ function PlanCard({ plan }: { plan: Plan }) {
     <div
       className={`group relative flex h-full flex-col justify-between rounded-2xl border p-7 transition ${
         isFeatured
-          ? "border-violet-soft bg-violet-soft glow-violet"
+          ? "border-white/30 bg-white/[0.06] shadow-[0_0_60px_-20px_rgba(255,255,255,0.25)] hover:bg-white/[0.08]"
           : "hairline bg-white/[0.02] hover:bg-white/[0.04]"
       }`}
     >
       {plan.tag && !isFeatured && (
-        <span className="absolute -top-2.5 left-7 rounded-full bg-white px-3 py-0.5 text-[10px] font-medium uppercase tracking-wider text-black">
+        <span className="absolute -top-2.5 left-7 rounded-full border hairline bg-black px-3 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
           {plan.tag}
         </span>
       )}
       {isFeatured && (
-        <span className="absolute -top-2.5 left-7 rounded-full bg-violet-400 px-3 py-0.5 text-[10px] font-medium uppercase tracking-wider text-black">
-          Founding Access
+        <span className="absolute -top-2.5 left-7 rounded-full bg-white px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-black">
+          Best Deal
         </span>
       )}
       <div>
         <h3 className="font-display text-2xl tracking-tight">{plan.title}</h3>
         <div className="mt-5 flex items-baseline gap-2">
-          <span
-            className={`font-display ${plan.price.startsWith("$") ? "text-5xl" : "text-3xl"} ${isFeatured ? "accent-violet" : ""}`}
-          >
-            {plan.price}
-          </span>
-          {plan.price.startsWith("$") && (
-            <span className="text-sm text-muted-foreground">one-time</span>
-          )}
+          <span className="font-display text-5xl">{plan.price}</span>
+          <span className="text-sm text-muted-foreground">one-time</span>
         </div>
         <ul className="mt-7 space-y-3">
           {plan.bullets.map((b) => (
             <li key={b} className="flex gap-3 text-sm text-muted-foreground">
-              <span className={`mt-1 h-1 w-1 shrink-0 rounded-full ${isFeatured ? "bg-violet-400" : "bg-white/60"}`} />
+              <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-white/60" />
               <span>{b}</span>
             </li>
           ))}
@@ -257,10 +253,9 @@ function PlanCard({ plan }: { plan: Plan }) {
         rel="noopener noreferrer"
         className={`mt-8 inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition ${
           isFeatured
-            ? "bg-violet-400 text-black hover:bg-violet-300"
-            : "bg-white text-black hover:bg-white/90"
+            ? "bg-white text-black hover:bg-white/90"
+            : "border hairline bg-transparent text-foreground hover:bg-white/5"
         }`}
-        style={isFeatured ? { backgroundColor: "oklch(0.78 0.16 295)" } : undefined}
       >
         {plan.cta} →
       </a>
