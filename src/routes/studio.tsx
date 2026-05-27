@@ -6,19 +6,6 @@ export const Route = createFileRoute("/studio")({
   component: Studio,
 });
 
-const BRANDS = [
-  { name: "Ascend Hoops", line: "Apparel · Tees + Hoodies", tone: "from-zinc-900 to-zinc-700" },
-  { name: "Court Logic", line: "Drop 01 · Sold out", tone: "from-violet-900/40 to-zinc-900" },
-  { name: "Northbound", line: "Capsule · Limited run", tone: "from-zinc-800 to-black" },
-  { name: "Studio 23", line: "Player-led brand", tone: "from-zinc-900 to-zinc-800" },
-];
-
-const REVIEWS = [
-  { quote: "Felt like I finally had a real brand, not just merch.", who: "D. R. — College Guard" },
-  { quote: "The launch campaign sold out the first drop in 4 days.", who: "M. J. — Prep PG" },
-  { quote: "Owning everything changed how I think about my career.", who: "K. T. — Sophomore SF" },
-];
-
 const PILLARS = [
   { k: "100%", t: "Ownership", d: "Your storefront, your customer data, your narrative." },
   { k: "100%", t: "Profit margin", d: "Set your own prices. Keep what's yours above base cost." },
@@ -60,68 +47,15 @@ function Studio() {
             >
               Get Access →
             </a>
-            <a
-              href="#work"
-              className="inline-flex items-center justify-center rounded-full border hairline px-6 py-3 text-sm text-foreground transition hover:bg-white/5"
-            >
-              See the work
-            </a>
           </div>
         </Reveal>
-      </section>
-
-      {/* PAST BRANDS */}
-      <section id="work" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8">
-        <Reveal>
-          <div className="mb-12">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">01 — Past brands</p>
-            <h2 className="mt-3 font-display text-4xl tracking-tight sm:text-5xl">
-              Brands we've built with players.
-            </h2>
-          </div>
-        </Reveal>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {BRANDS.map((b, i) => (
-            <Reveal key={b.name} delay={i * 80}>
-              <div className={`relative aspect-[5/3] overflow-hidden rounded-2xl border hairline bg-gradient-to-br ${b.tone}`}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.08),transparent_60%)]" />
-                <div className="absolute left-5 top-5 text-[10px] uppercase tracking-[0.2em] text-white/50">Case</div>
-                <div className="absolute bottom-5 left-5 right-5">
-                  <div className="font-display text-2xl">{b.name}</div>
-                  <div className="mt-1 text-xs text-white/60">{b.line}</div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* REVIEWS */}
-      <section className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8">
-        <Reveal>
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">02 — In their words</p>
-        </Reveal>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {REVIEWS.map((r, i) => (
-            <Reveal key={r.who} delay={i * 100}>
-              <figure className="h-full rounded-2xl border hairline bg-white/[0.02] p-6">
-                <blockquote className="font-display text-xl italic leading-snug">
-                  "{r.quote}"
-                </blockquote>
-                <figcaption className="mt-5 text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                  {r.who}
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
       </section>
 
       {/* WHY JOIN */}
       <section className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8">
         <Reveal>
           <div className="mb-12">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">03 — Why join</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">01 — Why join</p>
             <h2 className="mt-3 font-display text-4xl tracking-tight sm:text-5xl">
               Real brand ownership.
             </h2>
@@ -138,6 +72,39 @@ function Studio() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      {/* PLAYERS WE WORKED WITH */}
+      <section id="work" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8">
+        <Reveal>
+          <div className="mb-8">
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">02 — Players we worked with</p>
+            <h2 className="mt-3 font-display text-4xl tracking-tight sm:text-5xl">
+              Portfolio coming soon.
+            </h2>
+            <p className="mt-5 max-w-xl text-base text-muted-foreground">
+              For now, view our work on Instagram.
+            </p>
+          </div>
+        </Reveal>
+        <Reveal delay={120}>
+          <a
+            href="https://instagram.com/hoopivatestudio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-full border hairline px-6 py-3 text-sm text-foreground transition hover:bg-white/5"
+          >
+            @hoopivatestudio ↗
+          </a>
+        </Reveal>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8">
+        <Reveal>
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">03 — In their words</p>
+          <h2 className="mt-3 font-display text-4xl tracking-tight sm:text-5xl">Coming soon.</h2>
+        </Reveal>
       </section>
 
       {/* CTA */}
