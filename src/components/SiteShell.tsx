@@ -21,9 +21,15 @@ function Nav() {
         <img src={logo} alt="Hoopivate" className="h-8 w-8 rounded-full object-cover" />
         <span className="font-display text-2xl tracking-tight">Hoopivate</span>
       </Link>
-      <nav className="flex items-center gap-5 text-sm text-muted-foreground sm:gap-7">
+      <nav className="flex items-center gap-4 text-sm text-muted-foreground sm:gap-6">
         <Link to="/" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }} activeOptions={{ exact: true }}>
-          Spotlight
+          Athletes
+        </Link>
+        <Link to="/coaches" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
+          Coaches
+        </Link>
+        <Link to="/b2b" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
+          B2B
         </Link>
         <Link to="/studio" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
           Studio
