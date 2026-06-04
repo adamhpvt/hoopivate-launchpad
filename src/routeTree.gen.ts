@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as CoachesRouteImport } from './routes/coaches'
+import { Route as B2bRouteImport } from './routes/b2b'
 import { Route as IndexRouteImport } from './routes/index'
 
 const VaultRoute = VaultRouteImport.update({
@@ -29,6 +30,11 @@ const CoachesRoute = CoachesRouteImport.update({
   path: '/coaches',
   getParentRoute: () => rootRouteImport,
 } as any)
+const B2bRoute = B2bRouteImport.update({
+  id: '/b2b',
+  path: '/b2b',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/b2b': typeof B2bRoute
   '/coaches': typeof CoachesRoute
   '/studio': typeof StudioRoute
   '/vault': typeof VaultRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/b2b': typeof B2bRoute
   '/coaches': typeof CoachesRoute
   '/studio': typeof StudioRoute
   '/vault': typeof VaultRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/b2b': typeof B2bRoute
   '/coaches': typeof CoachesRoute
   '/studio': typeof StudioRoute
   '/vault': typeof VaultRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/coaches' | '/studio' | '/vault'
+  fullPaths: '/' | '/b2b' | '/coaches' | '/studio' | '/vault'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coaches' | '/studio' | '/vault'
-  id: '__root__' | '/' | '/coaches' | '/studio' | '/vault'
+  to: '/' | '/b2b' | '/coaches' | '/studio' | '/vault'
+  id: '__root__' | '/' | '/b2b' | '/coaches' | '/studio' | '/vault'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  B2bRoute: typeof B2bRoute
   CoachesRoute: typeof CoachesRoute
   StudioRoute: typeof StudioRoute
   VaultRoute: typeof VaultRoute
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoachesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/b2b': {
+      id: '/b2b'
+      path: '/b2b'
+      fullPath: '/b2b'
+      preLoaderRoute: typeof B2bRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  B2bRoute: B2bRoute,
   CoachesRoute: CoachesRoute,
   StudioRoute: StudioRoute,
   VaultRoute: VaultRoute,
