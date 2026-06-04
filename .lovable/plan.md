@@ -1,37 +1,76 @@
-All 5 spotlight images received (Xavier, Steven, Davian, Elijah, Coop). Here's what I'll do:
+# Home Page Rebuild — Athlete Path + B2B Portals
 
-## 1. Copy tweaks on Spotlight (`src/routes/index.tsx`)
+Keep the global look (black bg, Starfield, Instrument Serif display, hairlines, neon-on-black). Reuse `SiteShell`, `Reveal`, and existing tokens. No changes to nav, footer, styles.css base tokens, or other routes.
 
-- **$15 plan bullet** — change "Communicate your identity wherever it's sent" → **"Communicate your identity on any platform easily."**
-- **GoZone Founding Member price** — change `"Free"` → `"Exclusive Access"`. Adjust `PlanCard` so when the price isn't numeric, the "one-time" subtitle is hidden and the price renders at a smaller, more fitting size (so "Exclusive Access" doesn't blow out the card).
+## 1. Replace `src/routes/index.tsx`
 
-## 2. Spotlight images → tappable IG tiles
+Remove the current pricing/why/spotlights/closer sections entirely. New section order inside `<SiteShell>`:
 
-**Assets:** copy the 5 uploads into `src/assets/spotlights/` as:
-`xavier.jpg`, `steven.jpg`, `davian.jpg`, `elijah.jpg`, `cooper.jpg`
+1. **Hero** — compact intro
+   - Eyebrow chip: "For hoopers. Built for the NIL era."
+   - H1: "Your path starts here." (Instrument Serif, italic accent on "path")
+   - Sub: one line about turning story → leverage.
+   - Scroll cue ↓ to the path.
 
-**Data:** replace the placeholder `SAMPLES` array with the real 5, each with `{ src, name, igUrl }` pointing to the IG post links you sent.
+2. **Athlete Progression Path** (centerpiece)
+   - Section label: `01 — The Athlete Path`
+   - Gently curved decorative SVG line spanning the section (faint white/neon stardust, dashed, animated subtle drift via CSS keyframes).
+   - 6 bubble nodes overlaid using a responsive layout: on desktop a 6-col flex with alternating vertical offsets to suggest the curve; on mobile a vertical stack with the line going top-to-bottom.
+   - Each bubble: circular, ~96px, glassy (`bg-white/[0.04]`, `hairline`), step number on top, label below.
+   - **Bubble 1 — Active**: vibrant neon glow (cyan/violet ring + pulsing box-shadow via existing `glow-violet` token or a new `glow-neon` utility), no lock, label "Tell your story". Clickable → opens modal.
+   - **Bubbles 2–6 — Locked**: 40% opacity, padlock icon (lucide `Lock`), floating "COMING SOON" pill above. Labels in order: "Deep Vibe Analysis", "Smart Matching", "Roster Chemistry", "Portal Alignment", "Draft Vitals". Non-interactive (cursor-not-allowed, tooltip on hover).
 
-**Tile design** (`SpotlightTile`):
-- Wrap each tile in an `<a href={igUrl} target="_blank" rel="noopener noreferrer">` — the whole image is the button.
-- Rounded `rounded-2xl`, `overflow-hidden`, hairline border, soft shadow.
-- Full-bleed image via `<img>` with `object-cover` — no cropping of the headline/text inside the artwork (the cover art already contains its own typography, so we don't overlay any text on top).
-- Aspect ratio `aspect-[4/5]` to match IG portrait covers and keep all text inside visible.
-- **Press / hover overlay:** a subtle black-to-transparent gradient at the bottom that intensifies on `hover`/`active` (touch press), revealing a small pill that reads **"View on Instagram ↗"**. On mobile, the press state triggers via `:active` so a finger-down gives the same visual feedback before the tap completes and opens the link.
-- Smooth `transition` on image scale (1 → 1.03) and overlay opacity for the editorial feel.
-- Accessible `aria-label={`View ${name} on Instagram`}`.
+3. **Story Modal** (triggered by Bubble 1)
+   - Use existing shadcn `Dialog` component.
+   - Dark glass panel, hairline border, soft neon glow.
+   - Heading: "Step 01 — Tell your story"
+   - Body (bold, raw): "Be raw, and chaotic. AI won't help us know who you really are. Tell your story, in your own voice."
+   - Primary CTA button → `https://tally.so/r/xXleGo` (opens new tab).
+   - Secondary: small "Why we ask" caption.
 
-**Grid:** keep the existing 2-col mobile / 3-col desktop layout — 5 tiles flow naturally (last row has 2 tiles on desktop, 1 on mobile last row).
+4. **B2B Portals** — `02 — For Coaches & Brands`
+   - Two premium cards in a 2-col grid (stack on mobile). Both share: glassy bg, hairline border, soft glow on hover, top-corner "PARTNERS" micro-tag.
+   - **A. Coaches card**
+     - Eyebrow: "For Coaches"
+     - Hook (display serif): "Tired of landing good talent, only to get a bad locker room fit?"
+     - Body: "The new integration is coming soon to help you evaluate what matters under pressure. The new cherry on top for college basketball recruitment. Coming Soon."
+     - CTA: "Join the waitlist for early access →" → `https://tally.so/r/ODElLK` (new tab). Styled as a full-width pill button with subtle inner email-field look (input visual + arrow button) but on click it just opens the Tally form.
+   - **B. B2B Partners card**
+     - Eyebrow: "For Platforms & Brands"
+     - Hook: "Tired of flat, static athlete profiles that miss the human element?"
+     - Body: "The missing layer for better athlete NIL and recruitment alignment. Let's build a seamless API connection to instantly enrich and boost your current athlete profiles on your existing esteemed platforms."
+     - CTA: "Request API access →" → `https://tally.so/r/1ARkvM` (new tab). Same visual treatment.
 
-**Eyebrow link** "@hoopivate ↗" stays as is above the grid.
+5. **Closer** — short repeat of "Your story is the leverage." with a button that re-opens the Step 01 modal.
 
-## 3. Out of scope (untouched)
+## 2. Component additions
 
-- Nav, footer, Studio, Vault, GoZone violet styling, hero copy — all stay exactly as they are.
-- No new dependencies.
+Inline within `index.tsx` (small, single-file scope):
+- `PathBubble` component (active vs locked variants).
+- `StoryDialog` using `@/components/ui/dialog` (already in repo).
+- `PortalCard` for the two B2B cards.
+
+Icons via `lucide-react` (already a dep): `Lock`, `ArrowRight`, `Sparkles`.
+
+## 3. Styling
+
+Add a couple of utilities to `src/styles.css` under `@layer utilities`:
+- `.glow-neon` — stronger cyan/violet box-shadow for the active bubble.
+- `.pulse-glow` keyframes animation for the active bubble ring.
+- `.stardust-dash` — slow `stroke-dashoffset` drift for the SVG path.
+
+No changes to color tokens. Continue using existing violet `--accent` plus white for neon highlights — no purple text outside accents (per prior rule).
+
+## 4. Out of scope
+
+- No changes to `/studio`, `/vault`, nav, footer, or styles base tokens.
+- No removal of spotlight assets (kept in repo for future use, just unused on home).
+- No new packages.
 
 ## Technical notes
 
-- Images imported as ES modules from `@/assets/spotlights/*.jpg` for Vite hashing/optimization.
-- Press feedback uses Tailwind `group` + `group-hover:` / `group-active:` utilities — no JS state needed.
-- External links use `target="_blank"` + `rel="noopener noreferrer"`.
+- File touched: `src/routes/index.tsx` (full rewrite of body), `src/styles.css` (append 3 utility classes + keyframes).
+- Dialog: `@/components/ui/dialog` already exists.
+- Use `Reveal` for section entries to match existing motion language.
+- All external links use `target="_blank" rel="noopener noreferrer"`.
+- Mobile: bubbles stack vertically with vertical dashed line on the left; cards stack; modal is full-width with padding.
