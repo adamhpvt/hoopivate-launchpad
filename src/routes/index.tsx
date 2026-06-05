@@ -161,7 +161,7 @@ function PathBubble({
   bubble: { step: string; label?: string; locked: boolean };
   onClick?: () => void;
 }) {
-  const size = "h-[104px] w-[104px]";
+  const size = "h-[84px] w-[84px]";
   if (bubble.locked) {
     return (
       <div className="flex flex-col items-center">
