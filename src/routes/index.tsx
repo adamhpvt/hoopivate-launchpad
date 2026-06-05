@@ -45,7 +45,7 @@ function Index() {
         </Reveal>
         <Reveal delay={160}>
           <p className="mx-auto mt-7 max-w-xl text-base text-white/60 sm:text-lg">
-            Your story is the leverage. Unlock step one.
+            Your personality is the extra mile. The first step is to tell your story.
           </p>
         </Reveal>
       </section>
@@ -136,6 +136,103 @@ function Index() {
         </div>
       </section>
 
+
+      {/* WHY TELL YOUR STORY */}
+      <section className="relative mx-auto max-w-5xl px-5 pb-8 pt-16 sm:px-8 sm:pt-24">
+        <Reveal>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-white/50">
+            Why this matters
+          </p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
+            Why tell your <span className="italic">story.</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={140}>
+          <p className="mt-4 max-w-2xl text-base text-white/60">
+            Step one is small. What it unlocks isn't.
+          </p>
+        </Reveal>
+
+        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          {[
+            {
+              t: "Own your narrative",
+              d: "Stand out beyond the highlight reel. Your voice, your terms.",
+            },
+            {
+              t: "Inspire the next gen",
+              d: "Younger hoopers see themselves in your story. That ripple matters.",
+            },
+            {
+              t: "Early access",
+              d: "First in line for our recruitment add-on for the apps you already use, plus a personality-fit tool built for hoopers.",
+            },
+          ].map((c, i) => (
+            <Reveal key={c.t} delay={i * 90}>
+              <div className="h-full rounded-2xl border hairline bg-white/[0.02] p-5 backdrop-blur-sm">
+                <h3 className="font-display text-lg font-semibold text-white">{c.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/65">{c.d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={320}>
+          <div className="mt-6 rounded-xl border hairline bg-white/[0.015] px-5 py-4">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/45">
+              Your data, your call
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-white/70">
+              We don't sell your data. Your answers are used only to help craft
+              your social posts and to power a personality-fit tool we're
+              building for players and programs. That's it.
+            </p>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="relative mx-auto max-w-5xl px-5 pb-4 pt-16 sm:px-8">
+        <Reveal>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-white/50">
+            From the locker room
+          </p>
+        </Reveal>
+        <Reveal delay={80}>
+          <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            Players who told theirs.
+          </h2>
+        </Reveal>
+        <div className="no-scrollbar mt-6 flex gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible">
+          {[
+            { q: "Really appreciate you having me share those answers. Gave me some motivation to finish the week strong and helped me remember why I started in the first place.", n: "DeAngelo Adkins", l: "Pro" },
+            { q: "This is amazing. I hope to inspire some hoopers.", n: "Bryan Moussako", l: "D3" },
+            { q: "Very nice work. I appreciate you guys.", n: "Lucius Gibson-Savandel", l: "D1" },
+            { q: "I've always wanted people to know where I really came from. This is what they need to read before judging.", n: "Darius Brant", l: "Pro" },
+            { q: "Your brand and what you guys stand for is great.", n: "Evan Cabral", l: "D3" },
+            { q: "Appreciate you for listening to my story and wanting to share it out.", n: "Bobby Gardner", l: "D2" },
+            { q: "Using basketball as a tool to share some good messages. I love that. I'm honored to be part of it.", n: "Jack Clark", l: "High School" },
+          ].map((t) => (
+            <figure
+              key={t.n}
+              className="w-[78vw] shrink-0 rounded-xl border hairline bg-white/[0.02] p-4 sm:w-auto"
+            >
+              <blockquote className="text-sm leading-relaxed text-white/75">
+                "{t.q}"
+              </blockquote>
+              <figcaption className="mt-3 flex items-center justify-between gap-2">
+                <span className="text-xs font-medium text-white">{t.n}</span>
+                <span className="rounded-full border hairline px-2 py-0.5 text-[10px] uppercase tracking-[0.18em] text-white/55">
+                  {t.l}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
       {/* CLOSER */}
       <section className="relative mx-auto max-w-3xl px-5 py-20 text-center sm:px-8">
         <Reveal>
@@ -161,7 +258,7 @@ function PathBubble({
   bubble: { step: string; label?: string; locked: boolean };
   onClick?: () => void;
 }) {
-  const size = "h-[104px] w-[104px]";
+  const size = "h-[84px] w-[84px]";
   if (bubble.locked) {
     return (
       <div className="flex flex-col items-center">
@@ -193,7 +290,7 @@ function PathBubble({
         <div
           className={`${size} relative z-10 flex items-center justify-center rounded-full border border-white/40 bg-gradient-to-br from-white/15 to-white/[0.04] text-white shadow-[0_0_50px_-5px_rgba(180,140,255,0.7)] backdrop-blur-sm transition-transform group-hover:scale-[1.05]`}
         >
-          <span className="font-display text-3xl font-bold">{bubble.step}</span>
+          <span className="font-display text-2xl font-bold">{bubble.step}</span>
         </div>
       </div>
       <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-white/70">
@@ -224,8 +321,7 @@ function StoryDialog({
             Tell your <span className="italic">story</span>.
           </DialogTitle>
           <DialogDescription className="pt-3 text-base font-medium leading-relaxed text-white/80">
-            Be raw, and chaotic. AI won't help us know who you really are.
-            Tell your story, in your own voice.
+            Be raw. Be chaotic. Be you. Just your voice — that's all we need.
           </DialogDescription>
         </DialogHeader>
         <a
