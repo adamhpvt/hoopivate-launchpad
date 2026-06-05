@@ -224,8 +224,7 @@ function StoryDialog({
             Tell your <span className="italic">story</span>.
           </DialogTitle>
           <DialogDescription className="pt-3 text-base font-medium leading-relaxed text-white/80">
-            Be raw, and chaotic. AI won't help us know who you really are.
-            Tell your story, in your own voice.
+            Be raw. Be chaotic. Be you. Just your voice — that's all we need.
           </DialogDescription>
         </DialogHeader>
         <a
