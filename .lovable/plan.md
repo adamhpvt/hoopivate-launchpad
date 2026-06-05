@@ -1,76 +1,67 @@
-# Home Page Rebuild — Athlete Path + B2B Portals
 
-Keep the global look (black bg, Starfield, Instrument Serif display, hairlines, neon-on-black). Reuse `SiteShell`, `Reveal`, and existing tokens. No changes to nav, footer, styles.css base tokens, or other routes.
+## Scope
+Tighten the home page and nav. No backend, no new routes, no new packages.
 
-## 1. Replace `src/routes/index.tsx`
+## 1. `src/components/SiteShell.tsx` — Nav
+- Hide the "Hoopivate" wordmark on mobile (`hidden sm:inline`), keep logo.
+- Rename nav links: "Coaches" → "For Coaches", "B2B" → "For B2B".
+- Make nav horizontally scrollable on small screens so longer labels don't overlap the logo: wrap `<nav>` in a scroll container (`overflow-x-auto no-scrollbar`, `whitespace-nowrap`, flex items `shrink-0`). Keep current desktop layout unchanged.
+- Add a tiny `.no-scrollbar` utility in `src/styles.css` (hides webkit scrollbar) for clean appearance.
 
-Remove the current pricing/why/spotlights/closer sections entirely. New section order inside `<SiteShell>`:
+## 2. `src/routes/index.tsx`
 
-1. **Hero** — compact intro
-   - Eyebrow chip: "For hoopers. Built for the NIL era."
-   - H1: "Your path starts here." (Instrument Serif, italic accent on "path")
-   - Sub: one line about turning story → leverage.
-   - Scroll cue ↓ to the path.
+### Hero subheading
+Replace "Your story is the leverage. Unlock step one." with:
+> "Your personality is the extra mile. The first step is to tell your story."
 
-2. **Athlete Progression Path** (centerpiece)
-   - Section label: `01 — The Athlete Path`
-   - Gently curved decorative SVG line spanning the section (faint white/neon stardust, dashed, animated subtle drift via CSS keyframes).
-   - 6 bubble nodes overlaid using a responsive layout: on desktop a 6-col flex with alternating vertical offsets to suggest the curve; on mobile a vertical stack with the line going top-to-bottom.
-   - Each bubble: circular, ~96px, glassy (`bg-white/[0.04]`, `hairline`), step number on top, label below.
-   - **Bubble 1 — Active**: vibrant neon glow (cyan/violet ring + pulsing box-shadow via existing `glow-violet` token or a new `glow-neon` utility), no lock, label "Tell your story". Clickable → opens modal.
-   - **Bubbles 2–6 — Locked**: 40% opacity, padlock icon (lucide `Lock`), floating "COMING SOON" pill above. Labels in order: "Deep Vibe Analysis", "Smart Matching", "Roster Chemistry", "Portal Alignment", "Draft Vitals". Non-interactive (cursor-not-allowed, tooltip on hover).
+### Bubble sizing (Athletes path)
+Reduce `PathBubble` size from `h-[104px] w-[104px]` to roughly `h-[84px] w-[84px]`; scale inner step text from `text-3xl` to `text-2xl`. Keep desktop curve offsets and mobile serpentine offsets identical (only the nodes shrink). Adjust the desktop SVG top offset by a few px so the path still threads through the center of the smaller bubbles.
 
-3. **Story Modal** (triggered by Bubble 1)
-   - Use existing shadcn `Dialog` component.
-   - Dark glass panel, hairline border, soft neon glow.
-   - Heading: "Step 01 — Tell your story"
-   - Body (bold, raw): "Be raw, and chaotic. AI won't help us know who you really are. Tell your story, in your own voice."
-   - Primary CTA button → `https://tally.so/r/xXleGo` (opens new tab).
-   - Secondary: small "Why we ask" caption.
+### New "Why tell your story" section (placed AFTER the path, BEFORE the closer CTA)
+A clean 3-card grid (1 col mobile, 3 cols desktop) with a short intro line, then:
+1. **Own your narrative** — Stand out beyond the highlight reel. Your voice, your terms.
+2. **Inspire the next gen** — Younger hoopers see themselves in your story. That ripple matters.
+3. **Early access** — Be first in line for our recruitment add-on for the apps you already use, and our personality-fit tool built for hoopers.
 
-4. **B2B Portals** — `02 — For Coaches & Brands`
-   - Two premium cards in a 2-col grid (stack on mobile). Both share: glassy bg, hairline border, soft glow on hover, top-corner "PARTNERS" micro-tag.
-   - **A. Coaches card**
-     - Eyebrow: "For Coaches"
-     - Hook (display serif): "Tired of landing good talent, only to get a bad locker room fit?"
-     - Body: "The new integration is coming soon to help you evaluate what matters under pressure. The new cherry on top for college basketball recruitment. Coming Soon."
-     - CTA: "Join the waitlist for early access →" → `https://tally.so/r/ODElLK` (new tab). Styled as a full-width pill button with subtle inner email-field look (input visual + arrow button) but on click it just opens the Tally form.
-   - **B. B2B Partners card**
-     - Eyebrow: "For Platforms & Brands"
-     - Hook: "Tired of flat, static athlete profiles that miss the human element?"
-     - Body: "The missing layer for better athlete NIL and recruitment alignment. Let's build a seamless API connection to instantly enrich and boost your current athlete profiles on your existing esteemed platforms."
-     - CTA: "Request API access →" → `https://tally.so/r/1ARkvM` (new tab). Same visual treatment.
+Below the cards, a small calm "Your data, your call" note (not a hyped banner, plain text with a subtle border):
+> "We don't sell your data. Your answers are used only to help craft your social posts and to power a personality-fit tool we're building for players and programs. That's it."
 
-5. **Closer** — short repeat of "Your story is the leverage." with a button that re-opens the Step 01 modal.
+Tone: confident, plain, not hypey. Uses existing tokens (`hairline`, `text-white/70`, `bg-white/[0.02]`).
 
-## 2. Component additions
+### Testimonials (compact strip, below "Why tell your story", above closer)
+Small heading "From the locker room." Then a horizontally-scrollable row (mobile) / 3-col grid (desktop) of short quote cards. Each card: quote, name, level chip. Keep typography small (`text-sm` quote, `text-xs` meta), card padding tight, so the section feels like a sidebar — not a hero.
 
-Inline within `index.tsx` (small, single-file scope):
-- `PathBubble` component (active vs locked variants).
-- `StoryDialog` using `@/components/ui/dialog` (already in repo).
-- `PortalCard` for the two B2B cards.
+Quotes to include verbatim (lightly trimmed for length where noted):
+- DeAngelo Adkins — Pro
+- Bryan Moussako — D3
+- Lucius Gibson-Savandel — D1
+- Darius Brant — Pro (trim to one sentence: "I've always wanted people to know where I really came from. This is what they need to read before judging.")
+- Evan Cabral — D3
+- Bobby Gardner — D2
+- Jack Clark — High School
 
-Icons via `lucide-react` (already a dep): `Lock`, `ArrowRight`, `Sparkles`.
+### Closer
+Keep existing "Tell your story" button; no copy change beyond removing dependence on the old leverage line.
 
-## 3. Styling
+### StoryDialog copy (softer)
+Replace:
+> "Be raw, and chaotic. AI won't help us know who you really are. Tell your story, in your own voice."
 
-Add a couple of utilities to `src/styles.css` under `@layer utilities`:
-- `.glow-neon` — stronger cyan/violet box-shadow for the active bubble.
-- `.pulse-glow` keyframes animation for the active bubble ring.
-- `.stardust-dash` — slow `stroke-dashoffset` drift for the SVG path.
+With:
+> "Be raw. Be chaotic. Be you. Just your voice — that's all we need."
 
-No changes to color tokens. Continue using existing violet `--accent` plus white for neon highlights — no purple text outside accents (per prior rule).
+Keep CTA, Tally link, and "Takes ~3 minutes" sub-line as is.
 
-## 4. Out of scope
+## 3. `src/styles.css`
+Add only:
+```
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+```
 
-- No changes to `/studio`, `/vault`, nav, footer, or styles base tokens.
-- No removal of spotlight assets (kept in repo for future use, just unused on home).
-- No new packages.
-
-## Technical notes
-
-- File touched: `src/routes/index.tsx` (full rewrite of body), `src/styles.css` (append 3 utility classes + keyframes).
-- Dialog: `@/components/ui/dialog` already exists.
-- Use `Reveal` for section entries to match existing motion language.
-- All external links use `target="_blank" rel="noopener noreferrer"`.
-- Mobile: bubbles stack vertically with vertical dashed line on the left; cards stack; modal is full-width with padding.
+## Out of scope
+- `/coaches`, `/b2b`, `/studio`, `/vault` pages (unchanged).
+- Footer, Starfield, theme tokens (unchanged).
+- No new dependencies, no route changes.
