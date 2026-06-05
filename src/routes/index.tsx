@@ -193,7 +193,7 @@ function PathBubble({
         <div
           className={`${size} relative z-10 flex items-center justify-center rounded-full border border-white/40 bg-gradient-to-br from-white/15 to-white/[0.04] text-white shadow-[0_0_50px_-5px_rgba(180,140,255,0.7)] backdrop-blur-sm transition-transform group-hover:scale-[1.05]`}
         >
-          <span className="font-display text-3xl font-bold">{bubble.step}</span>
+          <span className="font-display text-2xl font-bold">{bubble.step}</span>
         </div>
       </div>
       <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-white/70">
