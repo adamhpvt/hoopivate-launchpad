@@ -16,25 +16,25 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
 function Nav() {
   return (
-    <header className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-5 sm:px-8 sm:py-7">
-      <Link to="/" className="flex items-center gap-2.5">
+    <header className="relative z-20 mx-auto flex w-full max-w-6xl items-center gap-3 px-5 py-5 sm:gap-6 sm:px-8 sm:py-7">
+      <Link to="/" className="flex shrink-0 items-center gap-2.5">
         <img src={logo} alt="Hoopivate" className="h-8 w-8 rounded-full object-cover" />
-        <span className="font-display text-2xl tracking-tight">Hoopivate</span>
+        <span className="hidden font-display text-2xl tracking-tight sm:inline">Hoopivate</span>
       </Link>
-      <nav className="flex items-center gap-4 text-sm text-muted-foreground sm:gap-6">
-        <Link to="/" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }} activeOptions={{ exact: true }}>
+      <nav className="no-scrollbar ml-auto flex items-center gap-4 overflow-x-auto whitespace-nowrap text-sm text-muted-foreground sm:gap-6">
+        <Link to="/" className="shrink-0 transition hover:text-foreground" activeProps={{ className: "text-foreground" }} activeOptions={{ exact: true }}>
           Athletes
         </Link>
-        <Link to="/coaches" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
-          Coaches
+        <Link to="/coaches" className="shrink-0 transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
+          For Coaches
         </Link>
-        <Link to="/b2b" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
-          B2B
+        <Link to="/b2b" className="shrink-0 transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
+          For B2B
         </Link>
-        <Link to="/studio" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
+        <Link to="/studio" className="shrink-0 transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
           Studio
         </Link>
-        <Link to="/vault" className="transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
+        <Link to="/vault" className="shrink-0 transition hover:text-foreground" activeProps={{ className: "text-foreground" }}>
           Vault
         </Link>
       </nav>
