@@ -34,7 +34,8 @@ function B2B() {
         <Reveal delay={220}>
           <p className="mt-8 text-base leading-relaxed text-muted-foreground sm:text-lg">
             Let's build a seamless API connection to instantly add an extra
-            layer to your athlete profiles on your existing platforms.
+            layer of credibility to your athlete profiles on your existing
+            platforms.
           </p>
         </Reveal>
         <Reveal delay={300}>
