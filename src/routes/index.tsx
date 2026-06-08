@@ -45,7 +45,7 @@ function Index() {
         </Reveal>
         <Reveal delay={160}>
           <p className="mx-auto mt-7 max-w-xl text-base text-white/60 sm:text-lg">
-            Your personality is the extra mile. The first step is to tell your story.
+            Your personality is the extra mile brands and coaches are looking for. The first step is to tell your story.
           </p>
         </Reveal>
       </section>

@@ -31,16 +31,10 @@ function B2B() {
             Profiles, with a <span className="italic">pulse.</span>
           </h1>
         </Reveal>
-        <Reveal delay={160}>
-          <p className="mt-8 text-lg leading-relaxed text-white/70 sm:text-xl">
-            Tired of flat, static athlete profiles that miss the human element?
-          </p>
-        </Reveal>
         <Reveal delay={220}>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-            The missing layer for better NIL and recruitment alignment.
-            Let's build a seamless API connection to instantly enrich and boost
-            your current athlete profiles on your existing platforms.
+          <p className="mt-8 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            Let's build a seamless API connection to instantly add an extra
+            layer to your athlete profiles on your existing platforms.
           </p>
         </Reveal>
         <Reveal delay={300}>
@@ -50,7 +44,7 @@ function B2B() {
             rel="noopener noreferrer"
             className="mt-12 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black transition hover:bg-white/90"
           >
-            Request API access
+            Request API early access
             <ArrowRight className="h-4 w-4" />
           </a>
         </Reveal>
