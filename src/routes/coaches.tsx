@@ -27,19 +27,15 @@ function Coaches() {
           </p>
         </Reveal>
         <Reveal delay={80}>
-          <h1 className="font-display text-5xl leading-[1] tracking-tight sm:text-7xl">
-            Talent is easy. <span className="italic">Fit isn't.</span>
+          <h1 className="font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl">
+            Tired of landing good talent, only to get a bad <span className="italic">locker room fit?</span>
           </h1>
         </Reveal>
-        <Reveal delay={160}>
-          <p className="mt-8 text-lg leading-relaxed text-white/70 sm:text-xl">
-            Tired of landing good talent, only to get a bad locker room fit?
-          </p>
-        </Reveal>
         <Reveal delay={220}>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+          <p className="mt-8 text-base leading-relaxed text-muted-foreground sm:text-lg">
             A new integration is coming to help you evaluate what matters under
-            pressure — the cherry on top for college basketball recruitment.
+            pressure — the cherry on top for college basketball recruitment,
+            built to cope with your existing and favorite workflows as a coach.
           </p>
         </Reveal>
         <Reveal delay={300}>
