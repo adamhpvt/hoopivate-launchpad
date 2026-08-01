@@ -104,10 +104,10 @@ function Launcher() {
       {/* Liquid chrome backdrop */}
       <div
         aria-hidden
-        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.85]"
+        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-100"
         style={{ backgroundImage: `url(${chromeBg.url})` }}
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/45" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/25" />
       <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
 
       {/* HERO */}
@@ -198,9 +198,9 @@ function GlassCard({
       <span aria-hidden className="glass-sheen" />
       <div className="relative flex items-start justify-between gap-5">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {card.locked && <Lock className="h-3.5 w-3.5 text-white/45" />}
-            <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h2 className="font-display text-2xl font-semibold tracking-tight whitespace-nowrap sm:text-3xl">
               {card.title}
             </h2>
             {card.locked && (
