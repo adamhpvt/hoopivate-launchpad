@@ -118,26 +118,28 @@ function Launcher() {
   return (
     <main className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-black text-foreground">
       {/* Liquid chrome backdrop */}
-      <div
-        aria-hidden
-        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.9]"
-        style={{ backgroundImage: `url(${chromeBg})` }}
-      />
+      <div aria-hidden className="chrome-breathe pointer-events-none absolute inset-0 z-0">
+        <div
+          className="chrome-drift absolute inset-[-10%] bg-cover bg-center opacity-[0.92]"
+          style={{ backgroundImage: `url(${chromeBg})` }}
+        />
+      </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/30" />
       <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
 
       {/* HEADER */}
       <div className="relative z-30 px-4 pt-4">
-        <div className="glass-card glass-active mx-auto flex w-full max-w-[560px] items-center justify-between overflow-visible rounded-[22px] px-4 py-2.5">
+        <div className="glass-card glass-header mx-auto flex w-full max-w-[560px] items-center justify-between overflow-visible rounded-[22px] px-4 py-2.5">
           <span aria-hidden className="glass-sheen" />
           <span className="w-9" />
-          <img src={logo} alt="Hoopivate" className="h-9 w-9 object-contain" />
+          <img src={logo} alt="Hoopivate" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]" />
+
           <button
             type="button"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-colors hover:bg-white/10"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-black/30 text-white/90 backdrop-blur-md transition-colors hover:bg-black/50"
           >
             {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -169,9 +171,10 @@ function Launcher() {
         <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/55">
           Dominating since forever
         </p>
-        <h1 className="chrome-text mt-1.5 font-display text-base font-semibold tracking-tight sm:text-lg">
-          The Hooper&apos;s Zone.
+        <h1 className="chrome-text mt-1.5 text-balance font-display text-base font-semibold tracking-tight sm:text-lg">
+          Hoopivate — The Hooper&apos;s Zone
         </h1>
+
       </header>
 
       {/* CARD STACK */}

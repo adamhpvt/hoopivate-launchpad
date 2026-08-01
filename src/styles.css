@@ -97,11 +97,22 @@
 
 /* ---- Liquid chrome backdrop ---- */
 @keyframes chrome-drift {
-  0%   { transform: scale(1.06) translate3d(0, 0, 0) rotate(0deg); }
-  50%  { transform: scale(1.14) translate3d(-2.5%, 2%, 0) rotate(1.2deg); }
-  100% { transform: scale(1.06) translate3d(0, 0, 0) rotate(0deg); }
+  0%   { transform: scale(1.04) translate3d(0, 0, 0); }
+  33%  { transform: scale(1.08) translate3d(-1.6%, 1.2%, 0); }
+  66%  { transform: scale(1.06) translate3d(1.4%, -1%, 0); }
+  100% { transform: scale(1.04) translate3d(0, 0, 0); }
 }
-.chrome-drift { animation: chrome-drift 34s ease-in-out infinite; }
+.chrome-drift {
+  animation: chrome-drift 48s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes chrome-breathe {
+  0%, 100% { filter: brightness(0.94) contrast(1); }
+  50%      { filter: brightness(1.08) contrast(1.04); }
+}
+.chrome-breathe { animation: chrome-breathe 20s ease-in-out infinite; }
+
 
 .grain {
   opacity: 0.055;
@@ -131,6 +142,23 @@
   -webkit-backdrop-filter: blur(22px) saturate(0%) brightness(0.85);
   filter: brightness(1);
 }
+/* Header glass — lets the backdrop read through as a blurred wash */
+.glass-header {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(10, 10, 12, 0.26) 100%
+  );
+  backdrop-filter: blur(18px) saturate(85%) brightness(0.95);
+  -webkit-backdrop-filter: blur(18px) saturate(85%) brightness(0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 18px 46px -22px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+
 .glass-behind {
   background: linear-gradient(
     180deg,
@@ -173,9 +201,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .chrome-drift { animation: none; }
+  .chrome-breathe { animation: none; }
   .glass-card { transition: none; }
   .scroll-bob { animation: none; }
 }
+
 
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
