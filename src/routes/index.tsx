@@ -260,13 +260,22 @@ function GlassCard({
             src={card.image}
             alt=""
             aria-hidden
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.5]"
+            loading="eager"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.55]"
           />
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-black/45" />
         </>
       )}
       <span aria-hidden className="glass-sheen" />
 
+      {!isActive ? (
+        <div className="relative mt-auto flex items-center gap-2">
+          {card.locked && <Lock className="h-3 w-3 text-white/35" />}
+          <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-white/45">
+            {card.title}
+          </span>
+        </div>
+      ) : (
       <div className="relative flex flex-1 flex-col">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           {card.locked && <Lock className="h-3.5 w-3.5 text-white/45" />}
@@ -280,6 +289,7 @@ function GlassCard({
           )}
         </div>
         <p className="mt-2.5 max-w-[24rem] text-sm text-white/65">{card.line}</p>
+
 
         <div className="mt-auto pt-5">
           {card.locked ? (
