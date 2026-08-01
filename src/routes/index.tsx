@@ -177,7 +177,7 @@ function Launcher() {
 
       {/* CARD STACK */}
       <section className="relative z-10 flex flex-1 items-center justify-center px-5">
-        <div className="relative h-[340px] w-full max-w-[420px] sm:h-[390px] sm:max-w-[500px]">
+        <div className="relative h-[400px] w-full max-w-[420px] sm:h-[440px] sm:max-w-[500px]">
           {CARDS.map((card, i) => {
             const d = i - active;
             const hidden = d < 0;
@@ -197,19 +197,45 @@ function Launcher() {
         </div>
       </section>
 
-      {/* DOTS */}
-      <div className="relative z-10 flex items-center justify-center gap-2 pb-2">
-        {CARDS.map((c, i) => (
-          <button
-            key={c.id}
-            aria-label={c.title}
-            onClick={() => setActive(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === active ? "w-6 bg-white/85" : "w-1.5 bg-white/25 hover:bg-white/45"
-            }`}
-          />
-        ))}
+      {/* SCROLL CUE */}
+      <div className="relative z-20 flex flex-col items-center gap-1 pb-1">
+        <button
+          type="button"
+          onClick={() => step(active === CARDS.length - 1 ? -1 : 1)}
+          className={`scroll-cue flex flex-col items-center gap-0.5 text-white/60 transition-opacity duration-500 hover:text-white ${
+            active === CARDS.length - 1 ? "opacity-0" : "opacity-100"
+          }`}
+          aria-label="Next card"
+          tabIndex={active === CARDS.length - 1 ? -1 : 0}
+        >
+          <span className="font-mono text-[9px] uppercase tracking-[0.32em]">Scroll</span>
+          <ChevronDown className="scroll-bob h-4 w-4" />
+        </button>
       </div>
+
+      {/* DOTS */}
+      <div className="relative z-10 flex items-center justify-center gap-3 pb-2">
+        <div className="flex items-center gap-2">
+          {CARDS.map((c, i) => (
+            <button
+              key={c.id}
+              aria-label={c.title}
+              onClick={() => setActive(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === active ? "w-8 bg-white/90" : "w-2 bg-white/30 hover:bg-white/55"
+              }`}
+            />
+          ))}
+        </div>
+        <span className="font-mono text-[10px] tracking-[0.22em] text-white/45">
+          {String(active + 1).padStart(2, "0")} / {String(CARDS.length).padStart(2, "0")}
+        </span>
+      </div>
+
+      <p className="relative z-10 hidden pb-1 text-center font-mono text-[9px] uppercase tracking-[0.28em] text-white/30 sm:block">
+        Scroll or use ↑ ↓ keys
+      </p>
+
 
       <footer className="relative z-10 pb-7 pt-4 text-center">
         <a
