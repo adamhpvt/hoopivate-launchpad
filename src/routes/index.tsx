@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Starfield } from "@/components/Starfield";
 import logo from "@/assets/hoopivate-logo.png";
@@ -25,7 +25,41 @@ const NAV = [
   { label: "What's Next", href: "#whats-next" },
 ];
 
+function useStackDepth() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const items = Array.from(
+      document.querySelectorAll<HTMLElement>(".stack-inner"),
+    );
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      for (const el of items) {
+        const rect = el.getBoundingClientRect();
+        const stuckTop = parseFloat(getComputedStyle(el.parentElement!).top) || 0;
+        // how far past the sticky point the card has been pushed/covered
+        const covered = Math.min(1, Math.max(0, (stuckTop - rect.top + 220) / 420));
+        const p = rect.top <= stuckTop + 1 ? covered : 0;
+        el.style.transform = `scale(${1 - p * 0.06})`;
+        el.style.opacity = `${1 - p * 0.45}`;
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+}
+
 function Launcher() {
+  useStackDepth();
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-black text-foreground">
       <Starfield />
@@ -145,7 +179,7 @@ function StackCard({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="group block rounded-3xl border border-white/12 bg-[#08080c] p-7 transition-[border-color,box-shadow] duration-300 hover:border-[var(--moon)]/50 hover:shadow-[0_0_60px_-18px_var(--moon)] sm:p-10"
+        className="stack-inner group block origin-top rounded-3xl will-change-transform border border-white/12 bg-[#08080c] p-7 transition-[border-color,box-shadow] duration-300 hover:border-[var(--moon)]/50 hover:shadow-[0_0_60px_-18px_var(--moon)] sm:p-10"
       >
         <CardBody title={title} line={line} />
       </a>
@@ -157,7 +191,7 @@ function WhatsNextCard({ index }: { index: number }) {
   const [open, setOpen] = useState(false);
   return (
     <div id="whats-next" className="stack-item sticky mb-6 scroll-mt-28" style={stackStyle(index)}>
-      <div className="rounded-3xl border border-white/12 bg-[#08080c] p-7 transition-[border-color,box-shadow] duration-300 hover:border-[var(--moon)]/50 hover:shadow-[0_0_60px_-18px_var(--moon)] sm:p-10">
+      <div className="stack-inner origin-top rounded-3xl border border-white/12 will-change-transform bg-[#08080c] p-7 transition-[border-color,box-shadow] duration-300 hover:border-[var(--moon)]/50 hover:shadow-[0_0_60px_-18px_var(--moon)] sm:p-10">
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
