@@ -3,9 +3,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Lock, Menu, X } from "lucide-react";
 import chromeBg from "@/assets/chrome-bg.jpg";
 import logo from "@/assets/hoopivate-logo.png";
-import collabAsset from "@/assets/hoopivate-collab.webp.asset.json";
-import studioAsset from "@/assets/hoopivate-studio.webp.asset.json";
-import vaultAsset from "@/assets/hoopivate-vault.webp.asset.json";
+import collabImg from "@/assets/hoopivate-collab.webp";
+import studioImg from "@/assets/hoopivate-studio.webp";
+import vaultImg from "@/assets/hoopivate-vault.webp";
 
 export const Route = createFileRoute("/")({
   component: Launcher,
@@ -28,7 +28,7 @@ const CARDS: Card[] = [
     line: "Motivate yourself and other hoopers through our signature collab posts.",
     href: "https://tally.so/r/1AzeQW",
     cta: "Get your collab now",
-    image: collabAsset.url,
+    image: collabImg,
   },
   {
     id: "studio",
@@ -36,7 +36,7 @@ const CARDS: Card[] = [
     line: "Build your merch line — 100% of profits to you.",
     href: "https://hoopivatestudio.com",
     cta: "Get your merch built",
-    image: studioAsset.url,
+    image: studioImg,
   },
   {
     id: "vault",
@@ -44,7 +44,7 @@ const CARDS: Card[] = [
     line: "Shop the latest Hoopivate drops.",
     href: "https://hoopivate-shop.fourthwall.com",
     cta: "Shop the vault",
-    image: vaultAsset.url,
+    image: vaultImg,
   },
   {
     id: "ai",
