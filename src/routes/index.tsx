@@ -1,262 +1,295 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { Starfield } from "@/components/Starfield";
-import logo from "@/assets/hoopivate-logo.png";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Lock } from "lucide-react";
+import chromeBg from "@/assets/chrome-bg.jpg";
 
 export const Route = createFileRoute("/")({
   component: Launcher,
 });
 
-const LINKS = {
-  studio: "https://hoopivatestudio.com",
-  vault: "https://hoopivate-shop.fourthwall.com",
-  collab: "https://tally.so/r/1AzeQW",
-  coach: "https://tally.so/r/1ARkvM",
-  athlete: "https://tally.so/r/jaXRAR",
-  support: "https://hoopivate-shop.fourthwall.com/pages/support-the-vision",
-  ig: "https://instagram.com/hoopivate",
-};
-
-const NAV = [
-  { label: "Studio", href: LINKS.studio },
-  { label: "Vault", href: LINKS.vault },
-  { label: "Collab", href: LINKS.collab },
-  { label: "What's Next", href: "#whats-next" },
-];
-
-function useStackDepth() {
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const items = Array.from(
-      document.querySelectorAll<HTMLElement>(".stack-inner"),
-    );
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      for (const el of items) {
-        const rect = el.getBoundingClientRect();
-        const stuckTop = parseFloat(getComputedStyle(el.parentElement!).top) || 0;
-        // how far past the sticky point the card has been pushed/covered
-        const covered = Math.min(1, Math.max(0, (stuckTop - rect.top + 220) / 420));
-        const p = rect.top <= stuckTop + 1 ? covered : 0;
-        el.style.transform = `scale(${1 - p * 0.06})`;
-        el.style.filter = `brightness(${1 - p * 0.55})`;
-      }
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      if (raf) cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-}
-
-function Launcher() {
-  useStackDepth();
-  return (
-    <div className="relative min-h-screen overflow-x-clip bg-black text-foreground">
-      <Starfield />
-
-      <header className="fixed inset-x-0 top-0 z-30 border-b border-white/5 bg-black/40 backdrop-blur-[2px]">
-        <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-3.5 sm:px-8">
-          <a href="#top" className="flex items-center gap-2.5">
-            <img
-              src={logo}
-              alt="Hoopivate"
-              className="h-9 w-9 rounded-full object-cover ring-1 ring-white/15"
-            />
-            <span className="sr-only">Hoopivate</span>
-          </a>
-          <nav className="no-scrollbar flex items-center gap-4 overflow-x-auto whitespace-nowrap text-[11px] uppercase tracking-[0.18em] text-white/55 sm:gap-7 sm:text-xs">
-            {NAV.map((n) => (
-              <a
-                key={n.label}
-                href={n.href}
-                {...(n.href.startsWith("#")
-                  ? {}
-                  : { target: "_blank", rel: "noopener noreferrer" })}
-                className="shrink-0 transition-colors hover:text-[var(--moon)]"
-              >
-                {n.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </header>
-
-      {/* HERO */}
-      <section
-        id="top"
-        className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-6 text-center"
-      >
-        <p className="text-[10px] uppercase tracking-[0.42em] text-white/45 sm:text-xs">
-          Dominating since forever
-        </p>
-        <h1 className="mt-6 font-display text-[clamp(2.75rem,11vw,6rem)] font-bold leading-[0.95] tracking-tight text-balance">
-          A place for <span className="text-glow">Hoopers.</span>
-        </h1>
-        <p className="mt-5 max-w-sm text-sm text-white/60 sm:max-w-md sm:text-base">
-          Your moodboard for the game — pick your lane.
-        </p>
-        <div className="scroll-hint mt-14 h-10 w-px bg-gradient-to-b from-white/40 to-transparent" />
-      </section>
-
-      {/* CARD STACK */}
-      <section className="relative z-10 mx-auto w-full max-w-3xl px-5 pb-[22vh] sm:px-8">
-        <StackCard
-          index={0}
-          title="Studio"
-          line="Build your merch line — 100% of profits to you."
-          href={LINKS.studio}
-        />
-        <StackCard
-          index={1}
-          title="Vault"
-          line="Shop the latest Hoopivate drops."
-          href={LINKS.vault}
-        />
-        <StackCard
-          index={2}
-          title="Collab"
-          line="Team up with us on an edit — motivate the game."
-          href={LINKS.collab}
-        />
-        <WhatsNextCard index={3} />
-      </section>
-
-      <footer className="relative z-10 border-t border-white/5">
-        <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-3 px-5 py-8 text-xs text-white/35 sm:px-8">
-          <a
-            href={LINKS.support}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors hover:text-[var(--moon)]"
-          >
-            Support the vision ♡
-          </a>
-          <a
-            href={LINKS.ig}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors hover:text-[var(--moon)]"
-          >
-            @hoopivate
-          </a>
-        </div>
-      </footer>
-    </div>
-  );
-}
-
-function stackStyle(index: number) {
-  return {
-    top: `calc(5.5rem + ${index * 14}px)`,
-    zIndex: 10 + index,
-  } as const;
-}
-
-function StackCard({
-  index,
-  title,
-  line,
-  href,
-}: {
-  index: number;
+type Card = {
+  id: string;
   title: string;
   line: string;
-  href: string;
-}) {
+  href?: string;
+  locked?: boolean;
+};
+
+const CARDS: Card[] = [
+  {
+    id: "collab",
+    title: "Collab",
+    line: "Move with other hoopers through our signature collab posts.",
+    href: "https://tally.so/r/1AzeQW",
+  },
+  {
+    id: "studio",
+    title: "Studio",
+    line: "Build your merch line — 100% of profits to you.",
+    href: "https://hoopivatestudio.com",
+  },
+  {
+    id: "vault",
+    title: "Vault",
+    line: "Shop the latest Hoopivate drops.",
+    href: "https://hoopivate-shop.fourthwall.com",
+  },
+  {
+    id: "ai",
+    title: "Hoopivate AI",
+    line: "Early access is opening in waves.",
+    locked: true,
+  },
+];
+
+const SUPPORT = "https://hoopivate-shop.fourthwall.com/pages/support-the-vision";
+const COACH = "https://tally.so/r/1ARkvM";
+const ATHLETE = "https://tally.so/r/jaXRAR";
+
+function Launcher() {
+  const [active, setActive] = useState(0);
+  const [aiOpen, setAiOpen] = useState(false);
+  const lockRef = useRef(0);
+  const touchY = useRef<number | null>(null);
+
+  const step = useCallback((dir: number) => {
+    const now = Date.now();
+    if (now < lockRef.current) return;
+    setActive((i) => {
+      const next = Math.min(CARDS.length - 1, Math.max(0, i + dir));
+      if (next !== i) lockRef.current = now + 480;
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    setAiOpen(false);
+  }, [active]);
+
+  useEffect(() => {
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) < 8) return;
+      e.preventDefault();
+      step(e.deltaY > 0 ? 1 : -1);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown" || e.key === "PageDown") step(1);
+      if (e.key === "ArrowUp" || e.key === "PageUp") step(-1);
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      touchY.current = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (touchY.current === null) return;
+      const dy = touchY.current - e.touches[0].clientY;
+      if (Math.abs(dy) > 42) {
+        step(dy > 0 ? 1 : -1);
+        touchY.current = null;
+      }
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [step]);
+
   return (
-    <div className="stack-item sticky mb-6" style={stackStyle(index)}>
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="stack-inner group block origin-top rounded-3xl will-change-transform border border-white/12 bg-[#08080c] p-7 transition-[border-color,box-shadow] duration-300 hover:border-[var(--moon)]/50 hover:shadow-[0_0_60px_-18px_var(--moon)] sm:p-10"
-      >
-        <CardBody title={title} line={line} />
-      </a>
-    </div>
+    <main className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-black text-foreground">
+      {/* Liquid chrome backdrop */}
+      <div
+        aria-hidden
+        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.55]"
+        style={{ backgroundImage: `url(${chromeBg})` }}
+      />
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/40" />
+      <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
+
+      {/* HERO */}
+      <header className="relative z-10 px-6 pt-[9svh] text-center sm:pt-[10svh]">
+        <p className="text-[10px] uppercase tracking-[0.42em] text-white/40 sm:text-[11px]">
+          Dominating since forever
+        </p>
+        <h1 className="chrome-text mt-4 font-display text-[clamp(2.4rem,10vw,4.5rem)] font-semibold leading-[0.95] tracking-tight">
+          The Hooper&apos;s Zone.
+        </h1>
+      </header>
+
+      {/* CARD STACK */}
+      <section className="relative z-10 flex flex-1 items-center justify-center px-5">
+        <div className="relative h-[340px] w-full max-w-[420px] sm:h-[390px] sm:max-w-[500px]">
+          {CARDS.map((card, i) => {
+            const d = i - active;
+            const hidden = d < 0;
+            const depth = Math.min(d, 3);
+            return (
+              <GlassCard
+                key={card.id}
+                card={card}
+                depth={depth}
+                hidden={hidden}
+                isActive={d === 0}
+                aiOpen={aiOpen}
+                onToggleAi={() => setAiOpen((v) => !v)}
+              />
+            );
+          })}
+        </div>
+      </section>
+
+      {/* DOTS */}
+      <div className="relative z-10 flex items-center justify-center gap-2 pb-2">
+        {CARDS.map((c, i) => (
+          <button
+            key={c.id}
+            aria-label={c.title}
+            onClick={() => setActive(i)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              i === active ? "w-6 bg-white/85" : "w-1.5 bg-white/25 hover:bg-white/45"
+            }`}
+          />
+        ))}
+      </div>
+
+      <footer className="relative z-10 pb-7 pt-4 text-center">
+        <a
+          href={SUPPORT}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[11px] tracking-[0.2em] text-white/35 uppercase transition-colors hover:text-white/70"
+        >
+          Support the vision
+        </a>
+      </footer>
+    </main>
   );
 }
 
-function WhatsNextCard({ index }: { index: number }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div id="whats-next" className="stack-item sticky mb-6 scroll-mt-28" style={stackStyle(index)}>
-      <div className="stack-inner origin-top rounded-3xl border border-white/12 will-change-transform bg-[#08080c] p-7 transition-[border-color,box-shadow] duration-300 hover:border-[var(--moon)]/50 hover:shadow-[0_0_60px_-18px_var(--moon)] sm:p-10">
+function GlassCard({
+  card,
+  depth,
+  hidden,
+  isActive,
+  aiOpen,
+  onToggleAi,
+}: {
+  card: Card;
+  depth: number;
+  hidden: boolean;
+  isActive: boolean;
+  aiOpen: boolean;
+  onToggleAi: () => void;
+}) {
+  const style: React.CSSProperties = hidden
+    ? { transform: "translate3d(0,-130%,0) scale(0.94)", opacity: 0, zIndex: 0 }
+    : {
+        transform: `translate3d(0, ${depth * 64}px, 0) scale(${1 - depth * 0.05})`,
+        opacity: depth > 2 ? 0 : 1,
+        zIndex: 20 - depth,
+      };
+
+  const body = isActive ? (
+    <>
+      <span aria-hidden className="glass-sheen" />
+      <div className="relative flex items-start justify-between gap-5">
+        <div>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            {card.locked && <Lock className="h-3.5 w-3.5 text-white/45" />}
+            <h2 className="font-display text-2xl font-semibold tracking-tight whitespace-nowrap sm:text-3xl">
+              {card.title}
+            </h2>
+            {card.locked && (
+              <span className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-[9px] uppercase tracking-[0.18em] text-white/55">
+                Waitlist
+              </span>
+            )}
+          </div>
+          <p className="mt-2.5 max-w-[22rem] text-sm text-white/55">{card.line}</p>
+        </div>
+        <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/70">
+          <ArrowUpRight className="h-4 w-4" />
+        </span>
+      </div>
+    </>
+  ) : (
+    <>
+      <span aria-hidden className="glass-sheen" />
+      <div className="relative mt-auto flex items-center gap-2 pt-2">
+        {card.locked && <Lock className="h-3 w-3 text-white/35" />}
+        <span className="font-display text-[13px] uppercase tracking-[0.24em] text-white/45">
+          {card.title}
+        </span>
+      </div>
+    </>
+  );
+
+  const sizeClass = card.locked
+    ? "min-h-[214px] sm:min-h-[240px]"
+    : "h-[214px] sm:h-[240px]";
+
+  const shell = `glass-card absolute inset-x-0 top-0 flex ${sizeClass} flex-col overflow-hidden origin-top rounded-[26px] p-6 will-change-transform sm:p-8 ${
+    isActive ? "glass-active" : "glass-behind"
+  }`;
+
+  if (card.locked) {
+    return (
+      <div className={shell} style={{ ...style, transitionProperty: "transform,opacity,filter" }}>
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          className="group block w-full text-left"
+          onClick={onToggleAi}
+          aria-expanded={aiOpen}
+          className="flex w-full flex-1 flex-col text-left"
+          disabled={!isActive}
         >
-          <CardBody
-            title="What's Next"
-            line="Early access to something new. Coach or athlete?"
-            rotate={open}
-          />
+          {body}
         </button>
+
         <div
-          className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
-            open ? "mt-6 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          className={`grid transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${
+            aiOpen ? "mt-5 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
           }`}
         >
           <div className="overflow-hidden">
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <ChoiceLink href={LINKS.coach} label="I'm a Coach" />
-              <ChoiceLink href={LINKS.athlete} label="I'm an Athlete" />
+            <div className="flex flex-col gap-2.5 sm:flex-row">
+              <Choice href={COACH} label="I'm a Coach" />
+              <Choice href={ATHLETE} label="I'm an Athlete" />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <a
+      href={card.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={shell}
+      style={style}
+      tabIndex={isActive ? 0 : -1}
+      aria-hidden={!isActive}
+    >
+      {body}
+    </a>
   );
 }
 
-function ChoiceLink({ href, label }: { href: string; label: string }) {
+function Choice({ href, label }: { href: string; label: string }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex flex-1 items-center justify-between gap-3 rounded-2xl border border-white/12 bg-white/[0.03] px-5 py-4 text-sm font-medium text-white transition-colors hover:border-[var(--moon)]/60 hover:text-[var(--moon)]"
+      className="flex flex-1 items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 transition-colors hover:border-white/40 hover:bg-white/[0.12]"
     >
       {label}
       <ArrowUpRight className="h-4 w-4" />
     </a>
-  );
-}
-
-function CardBody({
-  title,
-  line,
-  rotate,
-}: {
-  title: string;
-  line: string;
-  rotate?: boolean;
-}) {
-  return (
-    <div className="flex items-start justify-between gap-6">
-      <div>
-        <h2 className="font-display text-3xl font-bold tracking-tight sm:text-5xl">
-          {title}
-        </h2>
-        <p className="mt-3 max-w-md text-sm text-white/55 sm:text-base">{line}</p>
-      </div>
-      <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors group-hover:border-[var(--moon)]/60 group-hover:text-[var(--moon)]">
-        <ArrowUpRight
-          className={`h-5 w-5 transition-transform duration-300 ${rotate ? "rotate-90" : ""}`}
-        />
-      </span>
-    </div>
   );
 }
