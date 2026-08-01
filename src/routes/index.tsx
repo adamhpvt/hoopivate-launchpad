@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Lock, Menu, X } from "lucide-react";
-import chromeBg from "@/assets/chrome-bg.jpg";
+import { ArrowUpRight, ChevronDown, Lock, Menu, X } from "lucide-react";
+import chromeBg from "@/assets/hoopivate-bg.jpg";
 import logo from "@/assets/hoopivate-logo.png";
 import collabImg from "@/assets/hoopivate-collab.webp";
 import studioImg from "@/assets/hoopivate-studio.webp";
 import vaultImg from "@/assets/hoopivate-vault.webp";
+
+
 
 export const Route = createFileRoute("/")({
   component: Launcher,
@@ -121,7 +123,7 @@ function Launcher() {
         className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.9]"
         style={{ backgroundImage: `url(${chromeBg})` }}
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/45" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/30" />
       <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
 
       {/* HEADER */}
@@ -174,7 +176,7 @@ function Launcher() {
 
       {/* CARD STACK */}
       <section className="relative z-10 flex flex-1 items-center justify-center px-5">
-        <div className="relative h-[340px] w-full max-w-[420px] sm:h-[390px] sm:max-w-[500px]">
+        <div className="relative h-[400px] w-full max-w-[420px] sm:h-[440px] sm:max-w-[500px]">
           {CARDS.map((card, i) => {
             const d = i - active;
             const hidden = d < 0;
@@ -194,19 +196,45 @@ function Launcher() {
         </div>
       </section>
 
-      {/* DOTS */}
-      <div className="relative z-10 flex items-center justify-center gap-2 pb-2">
-        {CARDS.map((c, i) => (
-          <button
-            key={c.id}
-            aria-label={c.title}
-            onClick={() => setActive(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === active ? "w-6 bg-white/85" : "w-1.5 bg-white/25 hover:bg-white/45"
-            }`}
-          />
-        ))}
+      {/* SCROLL CUE */}
+      <div className="relative z-20 flex flex-col items-center gap-1 pb-1">
+        <button
+          type="button"
+          onClick={() => step(active === CARDS.length - 1 ? -1 : 1)}
+          className={`scroll-cue flex flex-col items-center gap-0.5 text-white/60 transition-opacity duration-500 hover:text-white ${
+            active === CARDS.length - 1 ? "opacity-0" : "opacity-100"
+          }`}
+          aria-label="Next card"
+          tabIndex={active === CARDS.length - 1 ? -1 : 0}
+        >
+          <span className="font-mono text-[9px] uppercase tracking-[0.32em]">Scroll</span>
+          <ChevronDown className="scroll-bob h-4 w-4" />
+        </button>
       </div>
+
+      {/* DOTS */}
+      <div className="relative z-10 flex items-center justify-center gap-3 pb-2">
+        <div className="flex items-center gap-2">
+          {CARDS.map((c, i) => (
+            <button
+              key={c.id}
+              aria-label={c.title}
+              onClick={() => setActive(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === active ? "w-8 bg-white/90" : "w-2 bg-white/30 hover:bg-white/55"
+              }`}
+            />
+          ))}
+        </div>
+        <span className="font-mono text-[10px] tracking-[0.22em] text-white/45">
+          {String(active + 1).padStart(2, "0")} / {String(CARDS.length).padStart(2, "0")}
+        </span>
+      </div>
+
+      <p className="relative z-10 hidden pb-1 text-center font-mono text-[9px] uppercase tracking-[0.28em] text-white/30 sm:block">
+        Scroll or use ↑ ↓ keys
+      </p>
+
 
       <footer className="relative z-10 pb-7 pt-4 text-center">
         <a
@@ -240,40 +268,21 @@ function GlassCard({
   const style: React.CSSProperties = hidden
     ? { transform: "translate3d(0,-14%,0) scale(0.985)", opacity: 0, zIndex: 0 }
     : {
-        transform: `translate3d(0, ${depth * 64}px, 0) scale(${1 - depth * 0.05})`,
+        transform: `translate3d(0, ${depth * 72}px, 0) scale(${1 - depth * 0.04})`,
         opacity: depth > 2 ? 0 : 1,
         zIndex: 20 - depth,
       };
 
-  const sizeClass = card.locked
-    ? "min-h-[230px] sm:min-h-[256px]"
-    : "min-h-[230px] sm:min-h-[256px]";
-
-  const shell = `glass-card glass-solid absolute inset-x-0 top-0 flex ${sizeClass} flex-col overflow-hidden origin-top rounded-[26px] p-6 will-change-transform sm:p-8 ${
+  const shell = `glass-card glass-solid absolute inset-x-0 top-0 flex min-h-[300px] flex-col overflow-hidden origin-top rounded-[26px] will-change-transform sm:min-h-[330px] ${
     isActive ? "glass-active" : "glass-behind"
   }`;
 
   return (
     <div className={shell} style={style}>
-      {card.image && (
-        <>
-          <img
-            src={card.image}
-            alt=""
-            aria-hidden
-            loading="eager"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.9]"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/55"
-          />
-        </>
-      )}
       <span aria-hidden className="glass-sheen" />
 
       {!isActive ? (
-        <div className="relative mt-auto flex items-center gap-2">
+        <div className="relative mt-auto flex items-center gap-2 p-6 sm:p-8">
           {card.locked && <Lock className="h-3 w-3 text-white/35" />}
           <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-white/45">
             {card.title}
@@ -281,18 +290,40 @@ function GlassCard({
         </div>
       ) : (
       <div className="relative flex flex-1 flex-col">
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          {card.locked && <Lock className="h-3.5 w-3.5 text-white/45" />}
-          <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-            {card.title}
-          </h2>
-          {card.locked && (
-            <span className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-white/55">
-              Waitlist
-            </span>
-          )}
-        </div>
-        <p className="mt-2.5 max-w-[24rem] text-sm text-white/65">{card.line}</p>
+        {/* PHOTO ZONE */}
+        {card.image ? (
+          <div className="relative h-[150px] w-full shrink-0 overflow-hidden sm:h-[170px]">
+            <img
+              src={card.image}
+              alt=""
+              aria-hidden
+              loading="eager"
+              className="h-full w-full object-cover object-center"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[rgba(8,8,10,0.94)]"
+            />
+          </div>
+        ) : (
+          <div aria-hidden className="h-8 w-full shrink-0" />
+        )}
+
+        {/* TEXT ZONE — plain glass, no photo behind */}
+        <div className="relative flex flex-1 flex-col bg-[rgba(8,8,10,0.94)] px-6 pb-6 pt-4 sm:px-8 sm:pb-7">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            {card.locked && <Lock className="h-3.5 w-3.5 text-white/45" />}
+            <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+              {card.title}
+            </h2>
+            {card.locked && (
+              <span className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-white/55">
+                Waitlist
+              </span>
+            )}
+          </div>
+          <p className="mt-2.5 max-w-[24rem] text-sm text-white/65">{card.line}</p>
+
 
 
         <div className="mt-auto pt-5">
@@ -333,8 +364,10 @@ function GlassCard({
               <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
           )}
+          </div>
         </div>
       </div>
+
       )}
 
     </div>
