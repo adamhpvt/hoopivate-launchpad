@@ -41,7 +41,7 @@ function useStackDepth() {
         const covered = Math.min(1, Math.max(0, (stuckTop - rect.top + 220) / 420));
         const p = rect.top <= stuckTop + 1 ? covered : 0;
         el.style.transform = `scale(${1 - p * 0.06})`;
-        el.style.opacity = `${1 - p * 0.45}`;
+        el.style.filter = `brightness(${1 - p * 0.55})`;
       }
     };
     const onScroll = () => {
