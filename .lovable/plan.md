@@ -1,43 +1,28 @@
-## 1. New background
+## 1. Background quality + motion
 
-Replace `src/assets/chrome-bg.jpg` with a generated image matching the reference: near-black void with a sweeping liquid light ribbon in crimson → magenta → gold, soft bloom, glossy highlights.
+- Regenerate `src/assets/hoopivate-bg.jpg` at a higher resolution (1920x1920 rather than the current ~1024-wide source) so the liquid light ribbon stays crisp on tall phone screens and desktop, keeping the same crimson/magenta/gold-on-black look.
+- Keep the existing faint grain overlay (it hides banding in the dark falloff areas).
+- Motion: keep `chrome-drift` but soften and layer it so it reads as a slow living surface rather than a zoom:
+  - slower cycle (~48s), smaller scale/translate range, no visible rotation snap;
+  - add a second, very slow opacity/brightness "breathe" pass (~20s) on the same layer so highlights gently pulse;
+  - both remain disabled under `prefers-reduced-motion`.
 
-- Generate at 1024x1920 (mobile-first, portrait) and upload via the asset CDN.
-- Keep the slow `chrome-drift` animation and the grain overlay.
-- Lighten the black scrim over it (`bg-black/45` → ~`bg-black/30`) so the color reads.
-- Keep the hero halo so "The Hooper's Zone." stays readable over the brighter areas.
-- Cards, text, and UI chrome stay strictly monochrome — color lives only in the background.
+## 2. Header glass — let the background through
 
-## 2. Card layout — text away from the photo
+Right now the header shares `.glass-card`, whose gradient bottoms out at ~90% opaque near-black, so nothing shows through. Add a dedicated `.glass-header` variant used only by the top bar:
 
-Restructure the active card into two stacked zones:
+- much lighter tint (roughly 10-18% white at top fading to ~35-45% dark at the bottom instead of 90%);
+- keep the heavy `backdrop-filter: blur(...)` plus a light saturation knock-down so the colour behind reads as a soft blurred wash rather than sharp shapes;
+- keep the glossy top sheen line and the depth shadow so it still reads as glass;
+- logo and hamburger keep their current contrast; if the brighter panel hurts the hamburger's legibility, its border/background get a small bump.
 
-```text
-┌──────────────────────────┐
-│   PHOTO  (top ~48%)      │  full-bleed, object-cover
-│                          │
-├──────────────────────────┤
-│  Title                   │  plain dark frosted glass
-│  One-line description    │  no photo behind
-│  ( CTA pill )            │
-└──────────────────────────┘
-```
+Cards stay opaque as they are — this change is header-only.
 
-- Photo is clipped to the top block only; a short gradient fades its bottom edge into the panel.
-- The text/CTA panel is opaque dark glass — no image behind any text.
-- Hoopivate AI (no image) keeps the plain full-glass card, text block in the same position.
-- Card min-height grows slightly to fit both zones comfortably; peek strips below are unchanged.
+## 3. Hero wording
 
-## 3. More obvious scrolling
-
-- Add an animated scroll cue below the stack: a small bouncing chevron with the mono label "SCROLL" that fades out after the first step and reappears at the top of the stack.
-- Make the peeking card below the active one more visible (less dim, slightly more offset) so there's a clear "more below" signal.
-- Enlarge the progress dots and add step text (`01 / 04`) next to them.
-- Desktop: also show up/down arrow key hints in the mono caption style.
-- Keep existing wheel / touch / keyboard step logic; only affordances change.
+In the hero, `The Hooper's Zone.` becomes `Hoopivate — The Hooper's Zone`, still on one centered line under the "Dominating since forever" eyebrow, with the same chrome text treatment. On narrow phones it wraps to two lines gracefully rather than shrinking below readable size.
 
 ### Technical notes
 
-- Files touched: `src/routes/index.tsx`, `src/styles.css`, plus a regenerated background asset in `src/assets/`.
-- Scroll cue animation and photo/panel gradients defined as CSS utilities in `styles.css`; no new dependencies.
-- `prefers-reduced-motion` disables the bouncing cue.
+- Files touched: `src/assets/hoopivate-bg.jpg` (regenerated), `src/styles.css` (`chrome-drift` keyframes, new `chrome-breathe`, new `.glass-header`, reduced-motion block), `src/routes/index.tsx` (header class swap, hero copy).
+- No changes to card layout, scroll logic, links, or the strictly monochrome card styling.
