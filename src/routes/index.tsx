@@ -166,7 +166,7 @@ function Launcher() {
       </div>
 
       {/* HERO */}
-      <header className="relative z-10 px-6 pt-6 text-center">
+      <header className="relative z-10 px-6 pt-10 pb-8 text-center">
         <span aria-hidden className="hero-halo pointer-events-none absolute inset-x-0 top-0 -z-10 h-[130%]" />
         <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/55">
           Dominating since forever
