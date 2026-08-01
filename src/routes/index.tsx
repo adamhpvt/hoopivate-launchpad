@@ -262,9 +262,12 @@ function GlassCard({
             alt=""
             aria-hidden
             loading="eager"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.55]"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.9]"
           />
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-black/45" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/55"
+          />
         </>
       )}
       <span aria-hidden className="glass-sheen" />
