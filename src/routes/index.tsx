@@ -228,10 +228,13 @@ function GlassCard({
     </>
   );
 
-  const shell = `glass-card absolute inset-x-0 top-0 flex h-[214px] flex-col overflow-hidden origin-top rounded-[26px] p-6 will-change-transform sm:h-[240px] sm:p-8 ${
+  const sizeClass = card.locked
+    ? "min-h-[214px] sm:min-h-[240px]"
+    : "h-[214px] sm:h-[240px]";
+
+  const shell = `glass-card absolute inset-x-0 top-0 flex ${sizeClass} flex-col overflow-hidden origin-top rounded-[26px] p-6 will-change-transform sm:p-8 ${
     isActive ? "glass-active" : "glass-behind"
   }`;
-
 
   if (card.locked) {
     return (
@@ -240,11 +243,12 @@ function GlassCard({
           type="button"
           onClick={onToggleAi}
           aria-expanded={aiOpen}
-          className="block w-full text-left"
+          className="flex w-full flex-1 flex-col text-left"
           disabled={!isActive}
         >
           {body}
         </button>
+
         <div
           className={`grid transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${
             aiOpen ? "mt-5 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
