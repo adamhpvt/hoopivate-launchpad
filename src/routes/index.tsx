@@ -269,40 +269,21 @@ function GlassCard({
   const style: React.CSSProperties = hidden
     ? { transform: "translate3d(0,-14%,0) scale(0.985)", opacity: 0, zIndex: 0 }
     : {
-        transform: `translate3d(0, ${depth * 64}px, 0) scale(${1 - depth * 0.05})`,
+        transform: `translate3d(0, ${depth * 72}px, 0) scale(${1 - depth * 0.04})`,
         opacity: depth > 2 ? 0 : 1,
         zIndex: 20 - depth,
       };
 
-  const sizeClass = card.locked
-    ? "min-h-[230px] sm:min-h-[256px]"
-    : "min-h-[230px] sm:min-h-[256px]";
-
-  const shell = `glass-card glass-solid absolute inset-x-0 top-0 flex ${sizeClass} flex-col overflow-hidden origin-top rounded-[26px] p-6 will-change-transform sm:p-8 ${
+  const shell = `glass-card glass-solid absolute inset-x-0 top-0 flex min-h-[300px] flex-col overflow-hidden origin-top rounded-[26px] will-change-transform sm:min-h-[330px] ${
     isActive ? "glass-active" : "glass-behind"
   }`;
 
   return (
     <div className={shell} style={style}>
-      {card.image && (
-        <>
-          <img
-            src={card.image}
-            alt=""
-            aria-hidden
-            loading="eager"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.9]"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/55"
-          />
-        </>
-      )}
       <span aria-hidden className="glass-sheen" />
 
       {!isActive ? (
-        <div className="relative mt-auto flex items-center gap-2">
+        <div className="relative mt-auto flex items-center gap-2 p-6 sm:p-8">
           {card.locked && <Lock className="h-3 w-3 text-white/35" />}
           <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-white/45">
             {card.title}
@@ -310,18 +291,40 @@ function GlassCard({
         </div>
       ) : (
       <div className="relative flex flex-1 flex-col">
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          {card.locked && <Lock className="h-3.5 w-3.5 text-white/45" />}
-          <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-            {card.title}
-          </h2>
-          {card.locked && (
-            <span className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-white/55">
-              Waitlist
-            </span>
-          )}
-        </div>
-        <p className="mt-2.5 max-w-[24rem] text-sm text-white/65">{card.line}</p>
+        {/* PHOTO ZONE */}
+        {card.image ? (
+          <div className="relative h-[150px] w-full shrink-0 overflow-hidden sm:h-[170px]">
+            <img
+              src={card.image}
+              alt=""
+              aria-hidden
+              loading="eager"
+              className="h-full w-full object-cover object-center"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[rgba(8,8,10,0.94)]"
+            />
+          </div>
+        ) : (
+          <div aria-hidden className="h-8 w-full shrink-0" />
+        )}
+
+        {/* TEXT ZONE — plain glass, no photo behind */}
+        <div className="relative flex flex-1 flex-col bg-[rgba(8,8,10,0.94)] px-6 pb-6 pt-4 sm:px-8 sm:pb-7">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            {card.locked && <Lock className="h-3.5 w-3.5 text-white/45" />}
+            <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+              {card.title}
+            </h2>
+            {card.locked && (
+              <span className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-white/55">
+                Waitlist
+              </span>
+            )}
+          </div>
+          <p className="mt-2.5 max-w-[24rem] text-sm text-white/65">{card.line}</p>
+
 
 
         <div className="mt-auto pt-5">
