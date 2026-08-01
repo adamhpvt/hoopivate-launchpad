@@ -61,7 +61,7 @@ function useStackDepth() {
 function Launcher() {
   useStackDepth();
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-black text-foreground">
+    <div className="relative min-h-screen overflow-x-clip bg-black text-foreground">
       <Starfield />
 
       <header className="fixed inset-x-0 top-0 z-30 border-b border-white/5 bg-black/40 backdrop-blur-[2px]">
@@ -109,7 +109,7 @@ function Launcher() {
       </section>
 
       {/* CARD STACK */}
-      <section className="relative z-10 mx-auto w-full max-w-3xl px-5 pb-[35vh] sm:px-8">
+      <section className="relative z-10 mx-auto w-full max-w-3xl px-5 pb-[22vh] sm:px-8">
         <StackCard
           index={0}
           title="Studio"
