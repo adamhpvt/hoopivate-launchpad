@@ -28,7 +28,7 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-input: var(--input);
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -46,13 +46,14 @@
   --secondary-foreground: oklch(0.97 0 0);
   --muted: oklch(0.12 0 0);
   --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.7 0.18 295); /* violet */
+  --accent: oklch(0.78 0.15 235); /* electric moonlight blue */
+  --moon: #7cc4ff;
   --accent-foreground: oklch(0.97 0 0);
   --destructive: oklch(0.6 0.22 27);
   --destructive-foreground: oklch(0.97 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.7 0.18 295);
+  --ring: oklch(0.78 0.15 235);
 }
 
 .dark {
@@ -71,7 +72,7 @@
     -webkit-font-smoothing: antialiased;
   }
   ::selection {
-    background: oklch(0.7 0.18 295 / 0.4);
+    background: oklch(0.78 0.15 235 / 0.35);
     color: #fff;
   }
 }
@@ -89,10 +90,6 @@
     transform: translateY(0);
   }
   .hairline { border-color: oklch(1 0 0 / 10%); }
-  .accent-violet { color: oklch(0.78 0.16 295); }
-  .bg-violet-soft { background: oklch(0.7 0.18 295 / 0.08); }
-  .border-violet-soft { border-color: oklch(0.7 0.18 295 / 0.45); }
-  .glow-violet { box-shadow: 0 0 80px -20px oklch(0.7 0.18 295 / 0.5); }
 }
 
 @keyframes floaty {
@@ -101,19 +98,19 @@
 }
 .animate-floaty { animation: floaty 9s ease-in-out infinite; }
 
-@keyframes stardust-drift {
-  to { stroke-dashoffset: -120; }
-}
-.stardust-dash { animation: stardust-drift 12s linear infinite; }
+.text-glow { text-shadow: 0 0 40px rgba(124, 196, 255, 0.45); }
 
-@keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(180,140,255,0.55), 0 0 30px 0 rgba(180,140,255,0.35); opacity: 1; }
-  100% { box-shadow: 0 0 0 22px rgba(180,140,255,0), 0 0 30px 0 rgba(180,140,255,0); opacity: 0; }
+@keyframes scroll-hint {
+  0%, 100% { opacity: 0.2; transform: translateY(0); }
+  50% { opacity: 0.9; transform: translateY(8px); }
 }
-.pulse-ring {
-  animation: pulse-ring 2.4s ease-out infinite;
-  border: 1px solid rgba(180,140,255,0.5);
+.scroll-hint { animation: scroll-hint 2.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-item { position: relative !important; }
+  .scroll-hint { animation: none; }
 }
+
 
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
