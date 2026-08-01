@@ -28,7 +28,8 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-input: var(--input);
-  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "League Spartan", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, monospace;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
 }
@@ -80,6 +81,7 @@
 
 @layer utilities {
   .font-display { font-family: var(--font-display); }
+  .font-mono { font-family: var(--font-mono); }
   .text-balance { text-wrap: balance; }
   .reveal {
     opacity: 0;
@@ -113,16 +115,16 @@
     180deg,
     rgba(255, 255, 255, 0.14) 0%,
     rgba(255, 255, 255, 0.05) 22%,
-    rgba(10, 10, 12, 0.62) 100%
+    rgba(10, 10, 12, 0.9) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
     0 24px 60px -22px rgba(0, 0, 0, 0.9),
     inset 0 1px 0 rgba(255, 255, 255, 0.35);
   transition:
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.45s ease,
-    filter 0.45s ease;
+    transform 0.85s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 0.8s cubic-bezier(0.33, 1, 0.68, 1),
+    filter 0.6s ease;
 }
 .glass-active {
   backdrop-filter: blur(22px) saturate(0%) brightness(0.85);
@@ -134,7 +136,7 @@
     180deg,
     rgba(255, 255, 255, 0.09) 0%,
     rgba(255, 255, 255, 0.03) 25%,
-    rgba(8, 8, 10, 0.72) 100%
+    rgba(8, 8, 10, 0.94) 100%
   );
   filter: brightness(0.62);
 }
@@ -166,3 +168,7 @@
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+
+/* Opaque glass so a front card fully covers the ones behind it */
+.glass-solid { background-color: rgba(8, 8, 10, 0.94); }
+.glass-solid.glass-behind { background-color: rgba(6, 6, 8, 0.97); }
