@@ -200,9 +200,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .chrome-drift { animation: none; }
+  .chrome-breathe { animation: none; }
   .glass-card { transition: none; }
   .scroll-bob { animation: none; }
 }
+
 
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
