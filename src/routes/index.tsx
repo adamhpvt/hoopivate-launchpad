@@ -193,7 +193,7 @@ function GlassCard({
         zIndex: 20 - depth,
       };
 
-  const body = (
+  const body = isActive ? (
     <>
       <span aria-hidden className="glass-sheen" />
       <div className="relative flex items-start justify-between gap-5">
@@ -216,11 +216,22 @@ function GlassCard({
         </span>
       </div>
     </>
+  ) : (
+    <>
+      <span aria-hidden className="glass-sheen" />
+      <div className="relative mt-auto flex items-center gap-2 pt-2">
+        {card.locked && <Lock className="h-3 w-3 text-white/35" />}
+        <span className="font-display text-[13px] uppercase tracking-[0.24em] text-white/45">
+          {card.title}
+        </span>
+      </div>
+    </>
   );
 
-  const shell = `glass-card absolute inset-x-0 top-0 origin-top rounded-[26px] p-6 will-change-transform sm:p-8 ${
+  const shell = `glass-card absolute inset-x-0 top-0 flex h-[214px] flex-col overflow-hidden origin-top rounded-[26px] p-6 will-change-transform sm:h-[240px] sm:p-8 ${
     isActive ? "glass-active" : "glass-behind"
   }`;
+
 
   if (card.locked) {
     return (
