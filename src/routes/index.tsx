@@ -139,7 +139,7 @@ function Launcher() {
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-colors hover:bg-white/10"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-black/30 text-white/90 backdrop-blur-md transition-colors hover:bg-black/50"
           >
             {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
