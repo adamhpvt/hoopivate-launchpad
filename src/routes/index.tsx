@@ -118,20 +118,22 @@ function Launcher() {
   return (
     <main className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-black text-foreground">
       {/* Liquid chrome backdrop */}
-      <div
-        aria-hidden
-        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.9]"
-        style={{ backgroundImage: `url(${chromeBg})` }}
-      />
+      <div aria-hidden className="chrome-breathe pointer-events-none absolute inset-0 z-0">
+        <div
+          className="chrome-drift absolute inset-[-10%] bg-cover bg-center opacity-[0.92]"
+          style={{ backgroundImage: `url(${chromeBg})` }}
+        />
+      </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/30" />
       <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
 
       {/* HEADER */}
       <div className="relative z-30 px-4 pt-4">
-        <div className="glass-card glass-active mx-auto flex w-full max-w-[560px] items-center justify-between overflow-visible rounded-[22px] px-4 py-2.5">
+        <div className="glass-card glass-header mx-auto flex w-full max-w-[560px] items-center justify-between overflow-visible rounded-[22px] px-4 py-2.5">
           <span aria-hidden className="glass-sheen" />
           <span className="w-9" />
-          <img src={logo} alt="Hoopivate" className="h-9 w-9 object-contain" />
+          <img src={logo} alt="Hoopivate" className="h-9 w-9 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]" />
+
           <button
             type="button"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
