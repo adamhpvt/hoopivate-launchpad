@@ -171,9 +171,10 @@ function Launcher() {
         <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/55">
           Dominating since forever
         </p>
-        <h1 className="chrome-text mt-1.5 font-display text-base font-semibold tracking-tight sm:text-lg">
-          The Hooper&apos;s Zone.
+        <h1 className="chrome-text mt-1.5 text-balance font-display text-base font-semibold tracking-tight sm:text-lg">
+          Hoopivate — The Hooper&apos;s Zone
         </h1>
+
       </header>
 
       {/* CARD STACK */}
