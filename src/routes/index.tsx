@@ -365,8 +365,10 @@ function GlassCard({
               <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
           )}
+          </div>
         </div>
       </div>
+
       )}
 
     </div>
