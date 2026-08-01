@@ -331,6 +331,8 @@ function GlassCard({
           )}
         </div>
       </div>
+      )}
+
     </div>
   );
 }
