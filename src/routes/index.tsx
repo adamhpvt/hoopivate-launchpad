@@ -1,11 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Lock, Menu, X } from "lucide-react";
-import chromeBg from "@/assets/chrome-bg.jpg";
+import { ArrowUpRight, ChevronDown, Lock, Menu, X } from "lucide-react";
+import chromeBgAsset from "@/assets/hoopivate-bg.jpg.asset.json";
 import logo from "@/assets/hoopivate-logo.png";
 import collabImg from "@/assets/hoopivate-collab.webp";
 import studioImg from "@/assets/hoopivate-studio.webp";
 import vaultImg from "@/assets/hoopivate-vault.webp";
+
+const chromeBg = chromeBgAsset.url;
+
 
 export const Route = createFileRoute("/")({
   component: Launcher,
