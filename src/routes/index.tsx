@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Lock } from "lucide-react";
-import chromeBg from "@/assets/chrome-bg.jpg.asset.json";
+import chromeBg from "@/assets/chrome-bg.jpg";
 
 export const Route = createFileRoute("/")({
   component: Launcher,
@@ -105,7 +105,7 @@ function Launcher() {
       <div
         aria-hidden
         className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-[position:62%_58%] opacity-100"
-        style={{ backgroundImage: `url(${chromeBg.url})` }}
+        style={{ backgroundImage: `url(${chromeBg})` }}
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/25" />
       <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
