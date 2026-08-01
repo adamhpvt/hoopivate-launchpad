@@ -163,7 +163,8 @@ function Launcher() {
 
       {/* HERO */}
       <header className="relative z-10 px-6 pt-6 text-center">
-        <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/40">
+        <span aria-hidden className="hero-halo pointer-events-none absolute inset-x-0 top-0 -z-10 h-[130%]" />
+        <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/55">
           Dominating since forever
         </p>
         <h1 className="chrome-text mt-1.5 font-display text-base font-semibold tracking-tight sm:text-lg">
