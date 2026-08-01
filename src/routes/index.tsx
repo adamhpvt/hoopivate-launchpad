@@ -118,10 +118,10 @@ function Launcher() {
       {/* Liquid chrome backdrop */}
       <div
         aria-hidden
-        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.55]"
+        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.9]"
         style={{ backgroundImage: `url(${chromeBg})` }}
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/40" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/45" />
       <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
 
       {/* HEADER */}
