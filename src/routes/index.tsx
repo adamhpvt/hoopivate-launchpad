@@ -118,10 +118,10 @@ function Launcher() {
       {/* Liquid chrome backdrop */}
       <div
         aria-hidden
-        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.55]"
+        className="chrome-drift pointer-events-none absolute inset-[-14%] z-0 bg-cover bg-center opacity-[0.9]"
         style={{ backgroundImage: `url(${chromeBg})` }}
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/40" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-black/45" />
       <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
 
       {/* HEADER */}
@@ -163,7 +163,8 @@ function Launcher() {
 
       {/* HERO */}
       <header className="relative z-10 px-6 pt-6 text-center">
-        <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/40">
+        <span aria-hidden className="hero-halo pointer-events-none absolute inset-x-0 top-0 -z-10 h-[130%]" />
+        <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/55">
           Dominating since forever
         </p>
         <h1 className="chrome-text mt-1.5 font-display text-base font-semibold tracking-tight sm:text-lg">
@@ -261,9 +262,12 @@ function GlassCard({
             alt=""
             aria-hidden
             loading="eager"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.55]"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.9]"
           />
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-black/45" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/55"
+          />
         </>
       )}
       <span aria-hidden className="glass-sheen" />

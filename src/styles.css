@@ -152,6 +152,11 @@
   );
 }
 
+.hero-halo {
+  background: radial-gradient(60% 70% at 50% 45%, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 45%, transparent 75%);
+  filter: blur(10px);
+}
+
 .chrome-text {
   background: linear-gradient(180deg, #ffffff 0%, #d8d8dc 42%, #8e8e96 62%, #f2f2f4 100%);
   -webkit-background-clip: text;
