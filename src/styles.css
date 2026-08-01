@@ -93,26 +93,76 @@
   .hairline { border-color: oklch(1 0 0 / 10%); }
 }
 
-@keyframes floaty {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-12px) translateX(6px); }
+/* ---- Liquid chrome backdrop ---- */
+@keyframes chrome-drift {
+  0%   { transform: scale(1.06) translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: scale(1.14) translate3d(-2.5%, 2%, 0) rotate(1.2deg); }
+  100% { transform: scale(1.06) translate3d(0, 0, 0) rotate(0deg); }
 }
-.animate-floaty { animation: floaty 9s ease-in-out infinite; }
+.chrome-drift { animation: chrome-drift 34s ease-in-out infinite; }
 
-.text-glow { text-shadow: 0 0 40px rgba(124, 196, 255, 0.45); }
-
-@keyframes scroll-hint {
-  0%, 100% { opacity: 0.2; transform: translateY(0); }
-  50% { opacity: 0.9; transform: translateY(8px); }
+.grain {
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
 }
-.scroll-hint { animation: scroll-hint 2.6s ease-in-out infinite; }
+
+/* ---- Frosted glass cards ---- */
+.glass-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.05) 22%,
+    rgba(10, 10, 12, 0.62) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 24px 60px -22px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease,
+    filter 0.45s ease;
+}
+.glass-active {
+  backdrop-filter: blur(22px) saturate(0%) brightness(0.85);
+  -webkit-backdrop-filter: blur(22px) saturate(0%) brightness(0.85);
+  filter: brightness(1);
+}
+.glass-behind {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(8, 8, 10, 0.72) 100%
+  );
+  filter: brightness(0.62);
+}
+.glass-sheen {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.75),
+    transparent
+  );
+}
+
+.chrome-text {
+  background: linear-gradient(180deg, #ffffff 0%, #d8d8dc 42%, #8e8e96 62%, #f2f2f4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 60px rgba(255, 255, 255, 0.18);
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .stack-item { position: relative !important; }
-  .scroll-hint { animation: none; }
+  .chrome-drift { animation: none; }
+  .glass-card { transition: none; }
 }
-
-
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
