@@ -122,7 +122,7 @@ function Launcher() {
 
       {/* CARD STACK */}
       <section className="relative z-10 flex flex-1 items-center justify-center px-5">
-        <div className="relative h-[300px] w-full max-w-[420px] sm:h-[330px] sm:max-w-[500px]">
+        <div className="relative h-[340px] w-full max-w-[420px] sm:h-[390px] sm:max-w-[500px]">
           {CARDS.map((card, i) => {
             const d = i - active;
             const hidden = d < 0;
