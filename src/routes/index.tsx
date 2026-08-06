@@ -4,7 +4,7 @@ import { ArrowUpRight, ChevronDown, Lock, Menu, X } from "lucide-react";
 import chromeBg from "@/assets/hoopivate-bg.jpg";
 import logo from "@/assets/hoopivate-logo.png";
 import collabImg from "@/assets/hoopivate-collab.webp";
-import studioAsset from "@/assets/hoopivate-studio-gold.png.asset.json";
+import studioImg from "@/assets/hoopivate-studio.webp";
 import vaultImg from "@/assets/hoopivate-vault.webp";
 
 export const Route = createFileRoute("/")({
@@ -36,7 +36,7 @@ const CARDS: Card[] = [
     line: "Build your merch line — 100% of profits to you.",
     href: "https://hoopivatestudio.com",
     cta: "Get your merch built",
-    image: studioAsset.url,
+    image: studioImg,
   },
   {
     id: "vault",
@@ -73,7 +73,8 @@ function Launcher() {
 
   const goTo = useCallback((i: number) => {
     const el = slideRefs.current[i];
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const root = scrollerRef.current;
+    if (el && root) root.scrollTo({ top: el.offsetTop, behavior: "smooth" });
   }, []);
 
   useEffect(() => {
