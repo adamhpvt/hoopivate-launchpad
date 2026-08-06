@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronDown, Lock, Menu, X } from "lucide-react";
+import { ArrowUpRight, Lock, Menu, X } from "lucide-react";
 import chromeBg from "@/assets/hoopivate-bg.jpg";
 import logo from "@/assets/hoopivate-logo.png";
 import collabImg from "@/assets/hoopivate-collab.webp";
@@ -114,7 +114,7 @@ function Launcher() {
       </div>
 
       {/* HERO */}
-      <header className="relative z-10 px-6 pb-16 pt-14 text-center sm:pb-24 sm:pt-20">
+      <header className="relative z-10 px-6 pb-7 pt-9 text-center sm:pb-9 sm:pt-12">
         <span aria-hidden className="hero-halo pointer-events-none absolute inset-x-0 top-0 -z-10 h-[130%]" />
         <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/55">
           Dominating since forever
@@ -123,14 +123,10 @@ function Launcher() {
           Hoopivate — The Hooper&apos;s Moodboard
         </h1>
 
-        <div className="mt-10 flex flex-col items-center gap-1 text-white/55">
-          <span className="font-mono text-[9px] uppercase tracking-[0.32em]">Scroll</span>
-          <ChevronDown className="scroll-bob h-4 w-4" />
-        </div>
       </header>
 
-      {/* CARDS — normal page flow, generous spacing */}
-      <section className="relative z-10 mx-auto flex w-full max-w-[500px] flex-col gap-24 px-5 pb-8 sm:gap-32">
+      {/* CARDS — compact, continuous page flow */}
+      <section className="relative z-10 mx-auto flex w-full max-w-[500px] flex-col gap-6 px-5 pb-6 sm:gap-8">
         {CARDS.map((card) => (
           <GlassCard
             key={card.id}
@@ -141,14 +137,15 @@ function Launcher() {
         ))}
       </section>
 
-      <footer className="relative z-10 pb-14 pt-24 text-center">
+      <footer className="relative z-10 pb-10 pt-5 text-center">
         <a
           href={SUPPORT}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/35 transition-colors hover:text-white/70"
+          className="glass-header inline-flex items-center gap-2 rounded-full px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-white/85 transition-colors hover:text-white"
         >
           Support the vision
+          <ArrowUpRight className="h-3.5 w-3.5" />
         </a>
       </footer>
     </main>
@@ -165,7 +162,7 @@ function GlassCard({
   onToggleAi: () => void;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(card.id === "collab");
 
   useEffect(() => {
     const el = ref.current;
