@@ -194,6 +194,20 @@
   text-shadow: 0 0 60px rgba(255, 255, 255, 0.18);
 }
 
+/* Card scroll reveal */
+.card-reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0) scale(0.965);
+  transition:
+    opacity 0.55s cubic-bezier(0.33, 1, 0.68, 1),
+    transform 0.65s cubic-bezier(0.33, 1, 0.68, 1);
+  will-change: transform, opacity;
+}
+.card-reveal.is-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
 @keyframes scroll-bob {
   0%, 100% { transform: translateY(0); opacity: 0.55; }
   50%      { transform: translateY(5px); opacity: 1; }
@@ -205,7 +219,9 @@
   .chrome-breathe { animation: none; }
   .glass-card { transition: none; }
   .scroll-bob { animation: none; }
+  .card-reveal { opacity: 1; transform: none; transition: none; }
 }
+
 
 
 

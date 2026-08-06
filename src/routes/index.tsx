@@ -4,10 +4,8 @@ import { ArrowUpRight, ChevronDown, Lock, Menu, X } from "lucide-react";
 import chromeBg from "@/assets/hoopivate-bg.jpg";
 import logo from "@/assets/hoopivate-logo.png";
 import collabImg from "@/assets/hoopivate-collab.webp";
-import studioImg from "@/assets/hoopivate-studio.webp";
+import studioAsset from "@/assets/hoopivate-studio-gold.png.asset.json";
 import vaultImg from "@/assets/hoopivate-vault.webp";
-
-
 
 export const Route = createFileRoute("/")({
   component: Launcher,
@@ -38,7 +36,7 @@ const CARDS: Card[] = [
     line: "Build your merch line — 100% of profits to you.",
     href: "https://hoopivatestudio.com",
     cta: "Get your merch built",
-    image: studioImg,
+    image: studioAsset.url,
   },
   {
     id: "vault",
@@ -63,57 +61,53 @@ const ATHLETE = "https://tally.so/r/jaXRAR";
 
 function Launcher() {
   const [active, setActive] = useState(0);
+  const [visible, setVisible] = useState<Record<number, boolean>>({ 0: true });
   const [aiOpen, setAiOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const lockRef = useRef(0);
-  const touchY = useRef<number | null>(null);
-
-  const step = useCallback((dir: number) => {
-    const now = Date.now();
-    if (now < lockRef.current) return;
-    setActive((i) => {
-      const next = Math.min(CARDS.length - 1, Math.max(0, i + dir));
-      if (next !== i) lockRef.current = now + 620;
-      return next;
-    });
-  }, []);
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     setAiOpen(false);
   }, [active]);
 
+  const goTo = useCallback((i: number) => {
+    const el = slideRefs.current[i];
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   useEffect(() => {
-    const onWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) < 8) return;
-      e.preventDefault();
-      step(e.deltaY > 0 ? 1 : -1);
-    };
+    const root = scrollerRef.current;
+    if (!root) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const i = Number((entry.target as HTMLElement).dataset.index);
+          if (Number.isNaN(i)) continue;
+          setVisible((v) => (v[i] === entry.isIntersecting ? v : { ...v, [i]: entry.isIntersecting }));
+          if (entry.isIntersecting && entry.intersectionRatio > 0.55) setActive(i);
+        }
+      },
+      { root, threshold: [0, 0.25, 0.6, 0.9] },
+    );
+    slideRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowDown" || e.key === "PageDown") step(1);
-      if (e.key === "ArrowUp" || e.key === "PageUp") step(-1);
-    };
-    const onTouchStart = (e: TouchEvent) => {
-      touchY.current = e.touches[0].clientY;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      if (touchY.current === null) return;
-      const dy = touchY.current - e.touches[0].clientY;
-      if (Math.abs(dy) > 42) {
-        step(dy > 0 ? 1 : -1);
-        touchY.current = null;
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        e.preventDefault();
+        goTo(Math.min(CARDS.length - 1, active + 1));
+      }
+      if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        goTo(Math.max(0, active - 1));
       }
     };
-    window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("keydown", onKey);
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-    };
-  }, [step]);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [active, goTo]);
 
   return (
     <main className="relative flex h-[100svh] w-full flex-col overflow-hidden bg-black text-foreground">
@@ -128,7 +122,7 @@ function Launcher() {
       <div aria-hidden className="grain pointer-events-none absolute inset-0 z-0" />
 
       {/* HEADER */}
-      <div className="relative z-30 px-4 pt-4">
+      <div className="relative z-30 shrink-0 px-4 pt-4">
         <div className="glass-card glass-header mx-auto flex w-full max-w-[560px] items-center justify-between overflow-visible rounded-[22px] px-4 py-2.5">
           <span aria-hidden className="glass-sheen" />
           <span className="w-9" />
@@ -146,7 +140,7 @@ function Launcher() {
         </div>
 
         {menuOpen && (
-          <div className="glass-card glass-active mx-auto mt-2 w-full max-w-[560px] overflow-hidden rounded-[22px] p-2">
+          <div className="glass-card glass-active absolute inset-x-4 z-40 mx-auto mt-2 w-auto max-w-[560px] overflow-hidden rounded-[22px] p-2 sm:left-1/2 sm:w-full sm:-translate-x-1/2">
             <span aria-hidden className="glass-sheen" />
             {CARDS.map((c) => (
               <a
@@ -166,44 +160,45 @@ function Launcher() {
       </div>
 
       {/* HERO */}
-      <header className="relative z-10 px-6 pt-10 pb-8 text-center">
+      <header className="relative z-10 shrink-0 px-6 pt-10 pb-10 text-center">
         <span aria-hidden className="hero-halo pointer-events-none absolute inset-x-0 top-0 -z-10 h-[130%]" />
         <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/55">
           Dominating since forever
         </p>
         <h1 className="chrome-text mt-1.5 text-balance font-display text-base font-semibold tracking-tight sm:text-lg">
-          Hoopivate — The Hooper&apos;s Zone
+          Hoopivate — The Hooper&apos;s Mood Board
         </h1>
-
       </header>
 
-      {/* CARD STACK */}
-      <section className="relative z-10 flex flex-1 items-center justify-center px-5">
-        <div className="relative h-[400px] w-full max-w-[420px] sm:h-[440px] sm:max-w-[500px]">
-          {CARDS.map((card, i) => {
-            const d = i - active;
-            const hidden = d < 0;
-            const depth = Math.min(d, 3);
-            return (
-              <GlassCard
-                key={card.id}
-                card={card}
-                depth={depth}
-                hidden={hidden}
-                isActive={d === 0}
-                aiOpen={aiOpen}
-                onToggleAi={() => setAiOpen((v) => !v)}
-              />
-            );
-          })}
-        </div>
+      {/* CARD SCROLLER */}
+      <section
+        ref={scrollerRef}
+        className="no-scrollbar relative z-10 min-h-0 flex-1 snap-y snap-mandatory overflow-y-auto overscroll-y-contain"
+      >
+        {CARDS.map((card, i) => (
+          <div
+            key={card.id}
+            data-index={i}
+            ref={(el) => {
+              slideRefs.current[i] = el;
+            }}
+            className="flex h-full snap-start snap-always items-center justify-center px-5"
+          >
+            <GlassCard
+              card={card}
+              inView={!!visible[i]}
+              aiOpen={aiOpen && active === i}
+              onToggleAi={() => setAiOpen((v) => !v)}
+            />
+          </div>
+        ))}
       </section>
 
       {/* SCROLL CUE */}
-      <div className="relative z-20 flex flex-col items-center gap-1 pb-1">
+      <div className="relative z-20 flex shrink-0 flex-col items-center gap-1 pt-2">
         <button
           type="button"
-          onClick={() => step(active === CARDS.length - 1 ? -1 : 1)}
+          onClick={() => goTo(active === CARDS.length - 1 ? 0 : active + 1)}
           className={`scroll-cue flex flex-col items-center gap-0.5 text-white/60 transition-opacity duration-500 hover:text-white ${
             active === CARDS.length - 1 ? "opacity-0" : "opacity-100"
           }`}
@@ -216,13 +211,13 @@ function Launcher() {
       </div>
 
       {/* DOTS */}
-      <div className="relative z-10 flex items-center justify-center gap-3 pb-2">
+      <div className="relative z-10 flex shrink-0 items-center justify-center gap-3 pt-2 pb-2">
         <div className="flex items-center gap-2">
           {CARDS.map((c, i) => (
             <button
               key={c.id}
               aria-label={c.title}
-              onClick={() => setActive(i)}
+              onClick={() => goTo(i)}
               className={`h-2 rounded-full transition-all duration-300 ${
                 i === active ? "w-8 bg-white/90" : "w-2 bg-white/30 hover:bg-white/55"
               }`}
@@ -234,12 +229,7 @@ function Launcher() {
         </span>
       </div>
 
-      <p className="relative z-10 hidden pb-1 text-center font-mono text-[9px] uppercase tracking-[0.28em] text-white/30 sm:block">
-        Scroll or use ↑ ↓ keys
-      </p>
-
-
-      <footer className="relative z-10 pb-7 pt-4 text-center">
+      <footer className="relative z-10 shrink-0 pb-6 pt-2 text-center">
         <a
           href={SUPPORT}
           target="_blank"
@@ -255,43 +245,23 @@ function Launcher() {
 
 function GlassCard({
   card,
-  depth,
-  hidden,
-  isActive,
+  inView,
   aiOpen,
   onToggleAi,
 }: {
   card: Card;
-  depth: number;
-  hidden: boolean;
-  isActive: boolean;
+  inView: boolean;
   aiOpen: boolean;
   onToggleAi: () => void;
 }) {
-  const style: React.CSSProperties = hidden
-    ? { transform: "translate3d(0,-14%,0) scale(0.985)", opacity: 0, zIndex: 0 }
-    : {
-        transform: `translate3d(0, ${depth * 72}px, 0) scale(${1 - depth * 0.04})`,
-        opacity: depth > 2 ? 0 : 1,
-        zIndex: 20 - depth,
-      };
-
-  const shell = `glass-card glass-solid absolute inset-x-0 top-0 flex min-h-[300px] flex-col overflow-hidden origin-top rounded-[26px] will-change-transform sm:min-h-[330px] ${
-    isActive ? "glass-active" : "glass-behind"
-  }`;
-
   return (
-    <div className={shell} style={style}>
+    <div
+      className={`glass-card glass-solid glass-active card-reveal ${
+        inView ? "is-in" : ""
+      } relative flex w-full max-w-[420px] flex-col overflow-hidden rounded-[26px] sm:max-w-[500px]`}
+    >
       <span aria-hidden className="glass-sheen" />
 
-      {!isActive ? (
-        <div className="relative mt-auto flex items-center gap-2 p-6 sm:p-8">
-          {card.locked && <Lock className="h-3 w-3 text-white/35" />}
-          <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-white/45">
-            {card.title}
-          </span>
-        </div>
-      ) : (
       <div className="relative flex flex-1 flex-col">
         {/* PHOTO ZONE */}
         {card.image ? (
@@ -300,7 +270,7 @@ function GlassCard({
               src={card.image}
               alt=""
               aria-hidden
-              loading="eager"
+              loading="lazy"
               className="h-full w-full object-cover object-center"
             />
             <div
@@ -312,7 +282,7 @@ function GlassCard({
           <div aria-hidden className="h-8 w-full shrink-0" />
         )}
 
-        {/* TEXT ZONE — plain glass, no photo behind */}
+        {/* TEXT ZONE */}
         <div className="relative flex flex-1 flex-col bg-[rgba(8,8,10,0.94)] px-6 pb-6 pt-4 sm:px-8 sm:pb-7">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {card.locked && <Lock className="h-3.5 w-3.5 text-white/45" />}
@@ -327,52 +297,45 @@ function GlassCard({
           </div>
           <p className="mt-2.5 max-w-[24rem] text-sm text-white/65">{card.line}</p>
 
-
-
-        <div className="mt-auto pt-5">
-          {card.locked ? (
-            <>
-              <button
-                type="button"
-                onClick={onToggleAi}
-                aria-expanded={aiOpen}
-                disabled={!isActive}
+          <div className="mt-auto pt-5">
+            {card.locked ? (
+              <>
+                <button
+                  type="button"
+                  onClick={onToggleAi}
+                  aria-expanded={aiOpen}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/90 backdrop-blur-md transition-colors hover:border-white/40 hover:bg-white/[0.14]"
+                >
+                  {card.cta}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </button>
+                <div
+                  className={`grid transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${
+                    aiOpen ? "mt-3 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <div className="flex flex-col gap-2.5 sm:flex-row">
+                      <Choice href={COACH} label="I'm a Coach" />
+                      <Choice href={ATHLETE} label="I'm an Athlete" />
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <a
+                href={card.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/90 backdrop-blur-md transition-colors hover:border-white/40 hover:bg-white/[0.14]"
               >
                 {card.cta}
                 <ArrowUpRight className="h-3.5 w-3.5" />
-              </button>
-              <div
-                className={`grid transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${
-                  aiOpen ? "mt-3 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                }`}
-              >
-                <div className="overflow-hidden">
-                  <div className="flex flex-col gap-2.5 sm:flex-row">
-                    <Choice href={COACH} label="I'm a Coach" />
-                    <Choice href={ATHLETE} label="I'm an Athlete" />
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            <a
-              href={card.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              tabIndex={isActive ? 0 : -1}
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/90 backdrop-blur-md transition-colors hover:border-white/40 hover:bg-white/[0.14]"
-            >
-              {card.cta}
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
-          )}
+              </a>
+            )}
           </div>
         </div>
       </div>
-
-      )}
-
     </div>
   );
 }
