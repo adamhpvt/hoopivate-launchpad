@@ -225,12 +225,12 @@ function Marquee({
 
   return (
     <div className="marquee-mask relative w-full overflow-hidden">
-      <div className={`marquee-track ${reverse ? "is-reverse" : ""} flex w-max gap-4 px-4`}>
+      <div className={`marquee-track ${reverse ? "is-reverse" : ""} flex w-max`}>
         {doubled.map((src, i) =>
           placeholders ? (
             <div
               key={i}
-              className="drop-tile flex h-[240px] w-[190px] shrink-0 items-center justify-center rounded-[20px] sm:h-[280px] sm:w-[220px]"
+              className="drop-tile mr-4 flex h-[240px] w-[190px] shrink-0 items-center justify-center rounded-[20px] sm:h-[280px] sm:w-[220px]"
             >
               <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-white/40">
                 Drop soon
@@ -243,7 +243,7 @@ function Marquee({
               alt=""
               aria-hidden
               loading="lazy"
-              className="story-tile h-[300px] w-[232px] shrink-0 rounded-[20px] object-cover sm:h-[360px] sm:w-[278px]"
+              className="story-tile mr-4 h-[300px] w-[232px] shrink-0 rounded-[20px] object-cover sm:h-[360px] sm:w-[278px]"
             />
           ),
         )}
