@@ -3,14 +3,14 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Heart, Menu, X } from "lucide-react";
 import logo from "@/assets/hoopivate-logo.png";
 
-import s1 from "@/assets/hoopivate-collab---1.webp.asset.json";
-import s2 from "@/assets/hoopivate-collab---1-1.webp.asset.json";
-import s3 from "@/assets/hoopivate-collab---1-2.webp.asset.json";
-import s4 from "@/assets/hoopivate-collab---1-3.webp.asset.json";
-import s5 from "@/assets/copy-of-the-spotlight---1.webp.asset.json";
-import s6 from "@/assets/copy-of-the-spotlight---1-1.webp.asset.json";
-import s7 from "@/assets/copy-of-the-spotlight---1-2.webp.asset.json";
-import s8 from "@/assets/copy-of-the-spotlight---1-3.webp.asset.json";
+import s1 from "@/assets/stories/story-1.webp";
+import s2 from "@/assets/stories/story-2.webp";
+import s3 from "@/assets/stories/story-3.webp";
+import s4 from "@/assets/stories/story-4.webp";
+import s5 from "@/assets/stories/story-5.webp";
+import s6 from "@/assets/stories/story-6.webp";
+import s7 from "@/assets/stories/story-7.webp";
+import s8 from "@/assets/stories/story-8.webp";
 
 export const Route = createFileRoute("/")({
   component: Launcher,
@@ -21,7 +21,7 @@ const SUPPORT = "https://hoopivate-shop.fourthwall.com/pages/support-the-vision"
 const SHOP = "https://hoopivate-shop.fourthwall.com";
 const AI_WAITLIST = "https://tally.so/r/jaXRAR";
 
-const STORIES = [s1.url, s2.url, s3.url, s4.url, s5.url, s6.url, s7.url, s8.url];
+const STORIES = [s1, s2, s3, s4, s5, s6, s7, s8];
 
 const NAV = [
   { label: "Tell Your Story", href: STORY_FORM },
