@@ -12,14 +12,14 @@ import s6 from "@/assets/stories/story-6.webp";
 import s7 from "@/assets/stories/story-7.webp";
 import s8 from "@/assets/stories/story-8.webp";
 
-import teeNavy from "@/assets/download_11.png.asset.json";
-import teePurple from "@/assets/download_4_1.png.asset.json";
-import teeSand from "@/assets/download_3_1.png.asset.json";
-import teeMaroon from "@/assets/download_2_1.png.asset.json";
-import teeWhite from "@/assets/download_1_1.png.asset.json";
-import logoDomination from "@/assets/Artboard_2_1.png.asset.json";
-import logoGrind from "@/assets/Artboard_2.png.asset.json";
-import logoLead from "@/assets/Artboard_1_1.png.asset.json";
+import teeNavy from "@/assets/vault/download_11.png";
+import teePurple from "@/assets/vault/download_4_1.png";
+import teeSand from "@/assets/vault/download_3_1.png";
+import teeMaroon from "@/assets/vault/download_2_1.png";
+import teeWhite from "@/assets/vault/download_1_1.png";
+import logoDomination from "@/assets/vault/Artboard_2_1.png";
+import logoGrind from "@/assets/vault/Artboard_2.png";
+import logoLead from "@/assets/vault/Artboard_1_1.png";
 
 export const Route = createFileRoute("/")({
   component: Launcher,
@@ -33,11 +33,11 @@ const AI_WAITLIST = "https://tally.so/r/jaXRAR";
 const STORIES = [s1, s2, s3, s4, s5, s6, s7, s8];
 
 const MERCH = [
-  { tee: teeWhite.url, logo: null, name: "None Of This Was Luck" },
-  { tee: teeNavy.url, logo: logoDomination.url, name: "The Domination Club" },
-  { tee: teeMaroon.url, logo: logoLead.url, name: "Lead Or Bleed" },
-  { tee: teePurple.url, logo: logoGrind.url, name: "Big Dreams, Heavy Nights" },
-  { tee: teeSand.url, logo: null, name: "Currently Dominating" },
+  { tee: teeWhite, logo: null, name: "None Of This Was Luck" },
+  { tee: teeNavy, logo: logoDomination, name: "The Domination Club" },
+  { tee: teeMaroon, logo: logoLead, name: "Lead Or Bleed" },
+  { tee: teePurple, logo: logoGrind, name: "Big Dreams, Heavy Nights" },
+  { tee: teeSand, logo: null, name: "Currently Dominating" },
 ];
 
 const NAV = [
@@ -104,7 +104,7 @@ function Launcher() {
 
       {/* HERO */}
       <Section className="px-6 pb-10 pt-16 text-center sm:pt-24">
-        <h1 className="chrome-text text-balance font-display text-[2.6rem] font-semibold leading-[0.95] tracking-tight sm:text-6xl">
+        <h1 className="chrome-text whitespace-nowrap font-display text-2xl font-semibold tracking-tight sm:text-3xl">
           Tell Your Story
         </h1>
         <p className="mx-auto mt-6 max-w-[34rem] text-sm leading-relaxed text-white/70 sm:text-base">
