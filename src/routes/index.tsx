@@ -221,42 +221,113 @@ function Section({
   );
 }
 
-function Marquee({
-  items,
-  reverse = false,
-  placeholders = false,
-}: {
-  items?: string[];
-  reverse?: boolean;
-  placeholders?: boolean;
-}) {
-  const list = placeholders ? Array.from({ length: 6 }, () => "") : (items ?? []);
-  const doubled = [...list, ...list];
+/* Auto-drifting rail that stays swipeable — touch takes over, drift resumes */
+function useDriftRail(speed = 0.35) {
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    let paused = false;
+    let resume: ReturnType<typeof setTimeout>;
+
+    const hold = () => {
+      paused = true;
+      clearTimeout(resume);
+      resume = setTimeout(() => (paused = false), 1600);
+    };
+
+    const tick = () => {
+      const half = el.scrollWidth / 2;
+      if (!paused) el.scrollLeft += speed;
+      if (el.scrollLeft >= half) el.scrollLeft -= half;
+      else if (el.scrollLeft <= 0) el.scrollLeft += half;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    el.addEventListener("touchstart", hold, { passive: true });
+    el.addEventListener("touchmove", hold, { passive: true });
+    el.addEventListener("wheel", hold, { passive: true });
+    el.addEventListener("pointerdown", hold);
+    el.addEventListener("mouseenter", hold);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(resume);
+      el.removeEventListener("touchstart", hold);
+      el.removeEventListener("touchmove", hold);
+      el.removeEventListener("wheel", hold);
+      el.removeEventListener("pointerdown", hold);
+      el.removeEventListener("mouseenter", hold);
+    };
+  }, [speed]);
+
+  return ref;
+}
+
+function Marquee({ items = [] }: { items?: string[] }) {
+  const railRef = useDriftRail(0.4);
+  const doubled = [...items, ...items];
 
   return (
-    <div className="marquee-mask relative w-full overflow-hidden">
-      <div className={`marquee-track ${reverse ? "is-reverse" : ""} flex w-max`}>
-        {doubled.map((src, i) =>
-          placeholders ? (
-            <div
-              key={i}
-              className="drop-tile mr-4 flex h-[240px] w-[190px] shrink-0 items-center justify-center rounded-[20px] sm:h-[280px] sm:w-[220px]"
-            >
-              <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-white/40">
-                Drop soon
-              </span>
-            </div>
-          ) : (
+    <div className="marquee-mask relative w-full">
+      <div ref={railRef} className="rail-wrap flex">
+        <div className="flex w-max">
+          {doubled.map((src, i) => (
             <img
               key={i}
               src={src}
               alt=""
               aria-hidden
+              draggable={false}
               loading="lazy"
-              className="story-tile mr-4 h-[300px] w-[232px] shrink-0 rounded-[20px] object-cover sm:h-[360px] sm:w-[278px]"
+              className="story-tile mr-4 h-[300px] w-[232px] shrink-0 select-none rounded-[20px] object-cover sm:h-[360px] sm:w-[278px]"
             />
-          ),
-        )}
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MerchRail() {
+  const railRef = useDriftRail(0.28);
+  const doubled = [...MERCH, ...MERCH];
+
+  return (
+    <div className="marquee-mask relative w-full">
+      <div ref={railRef} className="rail-wrap flex">
+        <div className="flex w-max">
+          {doubled.map((item, i) => (
+            <div
+              key={i}
+              className="merch-tile relative mr-4 h-[240px] w-[190px] shrink-0 overflow-hidden rounded-[20px] sm:h-[280px] sm:w-[220px]"
+            >
+              <img
+                src={item.tee}
+                alt={item.name}
+                draggable={false}
+                loading="lazy"
+                className="h-full w-full select-none object-contain p-3"
+              />
+              {item.logo && (
+                <div className="merch-chip absolute bottom-3 left-3 flex h-11 w-11 items-center justify-center rounded-xl p-1.5">
+                  <img
+                    src={item.logo}
+                    alt=""
+                    aria-hidden
+                    draggable={false}
+                    className="h-full w-full select-none object-contain"
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
