@@ -135,7 +135,7 @@ function Launcher() {
       <Section className="px-5 pb-24">
         <div className="ember-card mx-auto w-full max-w-[560px] rounded-[28px] px-6 py-10 text-center sm:px-10">
           <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-            What Hoopivate Does?
+            Like What Hoopivate Does?
           </h2>
           <p className="mx-auto mt-3 max-w-[30rem] text-sm leading-relaxed text-white/70">
             Support the vision by donating any amount you feel comfortable with.
@@ -180,7 +180,7 @@ function Launcher() {
 
       <footer className="relative z-10 px-6 pb-14 pt-16 text-center">
         <p className="mx-auto max-w-[30rem] font-mono text-[10px] uppercase leading-relaxed tracking-[0.22em] text-white/45">
-          Established 2023. Hoopivate aims to inspire the basketball community all over.
+          Established 2023. Hoopivate aims to inspire the basketball community.
         </p>
       </footer>
     </main>
