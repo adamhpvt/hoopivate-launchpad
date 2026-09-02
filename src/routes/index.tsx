@@ -135,7 +135,7 @@ function Launcher() {
       <Section className="px-5 pb-24">
         <div className="ember-card mx-auto w-full max-w-[560px] rounded-[28px] px-6 py-10 text-center sm:px-10">
           <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-            What Hoopivate Does?
+            Like What Hoopivate Does?
           </h2>
           <p className="mx-auto mt-3 max-w-[30rem] text-sm leading-relaxed text-white/70">
             Support the vision by donating any amount you feel comfortable with.
@@ -180,7 +180,7 @@ function Launcher() {
 
       <footer className="relative z-10 px-6 pb-14 pt-16 text-center">
         <p className="mx-auto max-w-[30rem] font-mono text-[10px] uppercase leading-relaxed tracking-[0.22em] text-white/45">
-          Established 2023. Hoopivate aims to inspire the basketball community all over.
+          Established 2023. Hoopivate aims to inspire the basketball community.
         </p>
       </footer>
     </main>
@@ -221,117 +221,72 @@ function Section({
   );
 }
 
-/* Auto-drifting rail that stays swipeable — touch takes over, drift resumes */
-function useDriftRail(speed = 0.35) {
-  const ref = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let raf = 0;
-    let paused = false;
-    let resume: ReturnType<typeof setTimeout>;
-
-    const hold = () => {
-      paused = true;
-      clearTimeout(resume);
-      resume = setTimeout(() => (paused = false), 1600);
-    };
-
-    const tick = () => {
-      const half = el.scrollWidth / 2;
-      if (!paused) el.scrollLeft += speed;
-      if (el.scrollLeft >= half) el.scrollLeft -= half;
-      else if (el.scrollLeft <= 0) el.scrollLeft += half;
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
-    el.addEventListener("touchstart", hold, { passive: true });
-    el.addEventListener("touchmove", hold, { passive: true });
-    el.addEventListener("wheel", hold, { passive: true });
-    el.addEventListener("pointerdown", hold);
-    el.addEventListener("mouseenter", hold);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(resume);
-      el.removeEventListener("touchstart", hold);
-      el.removeEventListener("touchmove", hold);
-      el.removeEventListener("wheel", hold);
-      el.removeEventListener("pointerdown", hold);
-      el.removeEventListener("mouseenter", hold);
-    };
-  }, [speed]);
-
-  return ref;
-}
-
 function Marquee({ items = [] }: { items?: string[] }) {
-  const railRef = useDriftRail(0.4);
   const doubled = [...items, ...items];
 
   return (
     <div className="marquee-mask relative w-full">
-      <div ref={railRef} className="rail-wrap flex">
-        <div className="flex w-max">
-          {doubled.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt=""
-              aria-hidden
-              draggable={false}
-              loading="lazy"
-              className="story-tile mr-4 h-[300px] w-[232px] shrink-0 select-none rounded-[20px] object-cover sm:h-[360px] sm:w-[278px]"
-            />
-          ))}
-        </div>
+      <div className="marquee-track flex w-max">
+        {doubled.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt=""
+            aria-hidden
+            draggable={false}
+            className="story-tile pointer-events-none mr-4 h-[300px] w-[232px] shrink-0 select-none rounded-[20px] object-cover sm:h-[360px] sm:w-[278px]"
+          />
+        ))}
       </div>
     </div>
   );
 }
 
+/* Vault rail: tee, logo chip, tee, logo chip — partner-strip rhythm, always looping */
 function MerchRail() {
-  const railRef = useDriftRail(0.28);
-  const doubled = [...MERCH, ...MERCH];
+  const sequence: { type: "tee" | "logo"; src: string; name: string }[] = [];
+  MERCH.forEach((item) => {
+    sequence.push({ type: "tee", src: item.tee, name: item.name });
+    if (item.logo) sequence.push({ type: "logo", src: item.logo, name: item.name });
+  });
+  const doubled = [...sequence, ...sequence];
 
   return (
     <div className="marquee-mask relative w-full">
-      <div ref={railRef} className="rail-wrap flex">
-        <div className="flex w-max">
-          {doubled.map((item, i) => (
+      <div className="marquee-track is-reverse flex w-max items-center">
+        {doubled.map((item, i) =>
+          item.type === "tee" ? (
             <div
               key={i}
-              className="merch-tile relative mr-4 h-[240px] w-[190px] shrink-0 overflow-hidden rounded-[20px] sm:h-[280px] sm:w-[220px]"
+              className="merch-tile pointer-events-none mr-4 h-[200px] w-[160px] shrink-0 overflow-hidden rounded-[20px] sm:h-[230px] sm:w-[185px]"
             >
               <img
-                src={item.tee}
+                src={item.src}
                 alt={item.name}
                 draggable={false}
-                loading="lazy"
                 className="h-full w-full select-none object-contain p-3"
               />
-              {item.logo && (
-                <div className="merch-chip absolute bottom-3 left-3 flex h-11 w-11 items-center justify-center rounded-xl p-1.5">
-                  <img
-                    src={item.logo}
-                    alt=""
-                    aria-hidden
-                    draggable={false}
-                    className="h-full w-full select-none object-contain"
-                  />
-                </div>
-              )}
             </div>
-          ))}
-        </div>
+          ) : (
+            <div
+              key={i}
+              className="merch-chip pointer-events-none mr-4 flex h-[110px] w-[110px] shrink-0 items-center justify-center rounded-2xl p-4 sm:h-[124px] sm:w-[124px]"
+            >
+              <img
+                src={item.src}
+                alt=""
+                aria-hidden
+                draggable={false}
+                className="h-full w-full select-none object-contain opacity-90"
+              />
+            </div>
+          ),
+        )}
       </div>
     </div>
   );
 }
+
 
 /* Space void: deep field, drifting nebula glow, starlight */
 function VoidField() {

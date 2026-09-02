@@ -28,9 +28,9 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-input: var(--input);
-  --font-display: "Orbitron", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Share Tech Mono", ui-monospace, monospace;
-  --font-sans: "Exo 2", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 
 }
 
@@ -340,7 +340,6 @@
   will-change: transform;
 }
 .marquee-track.is-reverse { animation-direction: reverse; animation-duration: 56s; }
-.marquee-mask:hover .marquee-track { animation-play-state: paused; }
 @keyframes marquee {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
@@ -390,6 +389,7 @@
   -webkit-overflow-scrolling: touch;
 }
 .drag-rail::-webkit-scrollbar { display: none; }
+.marquee-mask { overflow: hidden; }
 .rail-wrap {
   width: 100%;
   overflow-x: auto;
