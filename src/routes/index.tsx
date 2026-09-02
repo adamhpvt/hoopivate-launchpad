@@ -12,6 +12,15 @@ import s6 from "@/assets/stories/story-6.webp";
 import s7 from "@/assets/stories/story-7.webp";
 import s8 from "@/assets/stories/story-8.webp";
 
+import teeNavy from "@/assets/download_11.png.asset.json";
+import teePurple from "@/assets/download_4_1.png.asset.json";
+import teeSand from "@/assets/download_3_1.png.asset.json";
+import teeMaroon from "@/assets/download_2_1.png.asset.json";
+import teeWhite from "@/assets/download_1_1.png.asset.json";
+import logoDomination from "@/assets/Artboard_2_1.png.asset.json";
+import logoGrind from "@/assets/Artboard_2.png.asset.json";
+import logoLead from "@/assets/Artboard_1_1.png.asset.json";
+
 export const Route = createFileRoute("/")({
   component: Launcher,
 });
@@ -22,6 +31,14 @@ const SHOP = "https://hoopivate-shop.fourthwall.com";
 const AI_WAITLIST = "https://tally.so/r/jaXRAR";
 
 const STORIES = [s1, s2, s3, s4, s5, s6, s7, s8];
+
+const MERCH = [
+  { tee: teeWhite.url, logo: null, name: "None Of This Was Luck" },
+  { tee: teeNavy.url, logo: logoDomination.url, name: "The Domination Club" },
+  { tee: teeMaroon.url, logo: logoLead.url, name: "Lead Or Bleed" },
+  { tee: teePurple.url, logo: logoGrind.url, name: "Big Dreams, Heavy Nights" },
+  { tee: teeSand.url, logo: null, name: "Currently Dominating" },
+];
 
 const NAV = [
   { label: "Tell Your Story", href: STORY_FORM },
@@ -90,12 +107,10 @@ function Launcher() {
         <h1 className="chrome-text text-balance font-display text-[2.6rem] font-semibold leading-[0.95] tracking-tight sm:text-6xl">
           Tell Your Story
         </h1>
-        <p className="mx-auto mt-5 max-w-[26rem] font-mono text-[11px] uppercase tracking-[0.28em] text-[color:var(--moon)]">
-          The highest human act is to inspire
-        </p>
-        <p className="mx-auto mt-5 max-w-[34rem] text-sm leading-relaxed text-white/65 sm:text-base">
-          Tell your story, resonate more with your audience, and help everyone know who
-          you really are behind the jersey — while inspiring the younger generation.
+        <p className="mx-auto mt-6 max-w-[34rem] text-sm leading-relaxed text-white/70 sm:text-base">
+          The highest human act is to inspire. Resonate more with your audience and let
+          everyone know who you really are behind the jersey, while inspiring the younger
+          generation.
         </p>
       </Section>
 
@@ -120,7 +135,7 @@ function Launcher() {
       <Section className="px-5 pb-24">
         <div className="ember-card mx-auto w-full max-w-[560px] rounded-[28px] px-6 py-10 text-center sm:px-10">
           <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-            What Hoopivate Does
+            What Hoopivate Does?
           </h2>
           <p className="mx-auto mt-3 max-w-[30rem] text-sm leading-relaxed text-white/70">
             Support the vision by donating any amount you feel comfortable with.
@@ -148,7 +163,7 @@ function Launcher() {
           </p>
         </div>
         <div className="mt-8">
-          <Marquee reverse placeholders />
+          <MerchRail />
         </div>
         <div className="mt-10 px-6 text-center">
           <a
@@ -163,15 +178,10 @@ function Launcher() {
         </div>
       </Section>
 
-      <footer className="relative z-10 pb-14 pt-16 text-center">
-        <a
-          href={SUPPORT}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45 transition-colors hover:text-white/80"
-        >
-          Support the vision
-        </a>
+      <footer className="relative z-10 px-6 pb-14 pt-16 text-center">
+        <p className="mx-auto max-w-[30rem] font-mono text-[10px] uppercase leading-relaxed tracking-[0.22em] text-white/45">
+          Established 2023 — Hoopivate aims to inspire the basketball community all over.
+        </p>
       </footer>
     </main>
   );
@@ -256,7 +266,7 @@ function Marquee({
 function VoidField() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
-      <div className="absolute inset-0 bg-[#03040a]" />
+      <div className="absolute inset-0 bg-[#010104]" />
       <div className="nebula nebula-a" />
       <div className="nebula nebula-b" />
       <div className="starfield absolute inset-0" />
