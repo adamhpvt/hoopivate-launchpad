@@ -180,7 +180,7 @@ function Launcher() {
 
       <footer className="relative z-10 px-6 pb-14 pt-16 text-center">
         <p className="mx-auto max-w-[30rem] font-mono text-[10px] uppercase leading-relaxed tracking-[0.22em] text-white/45">
-          Established 2023 — Hoopivate aims to inspire the basketball community all over.
+          Established 2023. Hoopivate aims to inspire the basketball community all over.
         </p>
       </footer>
     </main>
